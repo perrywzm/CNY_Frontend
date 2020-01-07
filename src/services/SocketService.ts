@@ -1,12 +1,11 @@
 import SockJS from "sockjs-client";
-import { Client } from "@stomp/stompjs";
+import { Client, Frame, Message } from "@stomp/stompjs";
 
-// const ENDPOINT = "http://192.168.137.1:8090";
 const ENDPOINT = "http://cny-game.herokuapp.com/game";
 
 export default class SocketService {
   socket: WebSocket;
-  stompClient: any;
+  stompClient: Client;
 
   constructor() {
     const stompConfig = {
@@ -30,14 +29,16 @@ export default class SocketService {
 
     this.stompClient = new Client(stompConfig);
     this.stompClient.webSocketFactory = () => new SockJS(ENDPOINT);
-    this.stompClient.onConnect = (frame) => {
+    this.stompClient.onConnect = (frame: Frame) => {
+      console.log(frame)
       // The return object has a method called `unsubscribe`
-      const subscription = this.stompClient.subscribe('/topic/game', function (message) {
+      const subscription = this.stompClient.subscribe('/topic/game', (message: Message) => {
         const payload = JSON.parse(message.body);
         console.log(payload);
       });
     }
     this.stompClient.activate();
+
     // this.stompClient.connect({}, (frame) => {
     //   this.stompClient.subscribe('/topic/game', msg => console.log(msg))
     // })
