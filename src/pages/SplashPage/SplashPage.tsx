@@ -44,6 +44,9 @@ const SplashPage: React.FC<Props> = () => {
     const result = await AjaxService.submitTableId(tableId);
     if (result) {
       history.push("/lobby");
+    } else {
+      window.alert("Table ID has already been used or does not exist!")
+      setConnecting(false);
     }
   };
 
