@@ -11,9 +11,13 @@ export default class AjaxService {
       );
     } else {
       try {
-        const result = await axios.post(BASE_HREF + "/user/create", {
-          username: tableId
-        });
+        const result = await axios.post(
+          BASE_HREF + "/user/create",
+          {
+            username: tableId
+          },
+          { withCredentials: true }
+        );
         console.log("Result came in!", result);
         if (result.status === 200) {
           return;
