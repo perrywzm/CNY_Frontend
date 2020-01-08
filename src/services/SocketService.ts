@@ -12,10 +12,9 @@ export default class SocketService {
     const stompConfig = {
       // Typically login, passcode and vhost
       // Adjust these for your broker
-      // connectHeaders: {
-      //   login: "guest",
-      //   passcode: "guest"
-      // },
+      connectHeaders: {
+        jwt: "bearer ghghghki.hkikh.gues435454543t"
+      },
 
       // Broker URL, should start with ws:// or wss:// - adjust for your broker setup
       // brokerURL: "ws://cny-game.herokuapp.com/game",
@@ -34,6 +33,7 @@ export default class SocketService {
       // The return object has a method called `unsubscribe`
       const subscription = this.stompClient.subscribe('/topic/game', function (message) {
         const payload = JSON.parse(message.body);
+        
         console.log(payload);
       });
     }

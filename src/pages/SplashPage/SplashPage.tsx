@@ -1,8 +1,13 @@
 import React from "react";
-import { makeStyles, Typography } from "@material-ui/core";
-import { COLORS } from "./../../theme";
-import SocketService from "../../services/SocketService";
-import TEXT_INTRO from "./components/intro";
+import { makeStyles } from "@material-ui/core/styles";
+import { Input, Button, Typography, Box, TextField } from "@material-ui/core";
+import AjaxService from "../../services/AjaxService";
+import { useHistory } from "react-router-dom";
+import { useUserMedia } from "../../services/MediaService";
+import ChineseTitleCard from "../../components/ChineseTitleCard";
+import MainTitleCard from "../../components/MainTitleCard";
+import TextInput from "../../components/TextInput";
+import { COLORS } from "../../theme";
 
 const useStyles = makeStyles({
   container: {
@@ -15,54 +20,47 @@ const useStyles = makeStyles({
   }
 });
 
-const SplashPage: React.FC = () => {
+interface Props {}
+
+const SplashPage: React.FC<Props> = () => {
   const classes = useStyles({});
-  React.useEffect(() => {
-    const ws = new SocketService();
-  }, []);
+  const history = useHistory();
+  // const mediaStream = useUserMedia({
+  //   audio: false,
+  //   video: { facingMode: "environment" }
+  // });
+  // console.log(mediaStream)
+  const [isConnecting, setConnecting] = React.useState(false);
+  const [tableId, setTableId] = React.useState("");
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setTableId(e.target.value);
+  };
+
+  const handleSubmit = async () => {
+    if (isConnecting) return;
+
+    setConnecting(true);
+    const result = await AjaxService.submitTableId(tableId);
+    if (result) {
+      history.push("/lobby");
+    }
+  };
+
   return (
-    <div className={classes.container}>
-      <div style={{padding: "0.5em 0 0 1em", color: COLORS.accent, position: 'fixed' }}>
-        Table 1
-      </div>
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          marginTop: '2em',
-          padding: "1.5em",
-          color: COLORS.accent,
-          textAlign: "center",
-          textShadow: "4px 4px #333333"
-        }}
-      >
-        <Typography variant="h1">英雄所見略同</Typography>
-      </div>
-      <div
-        style={{
-          backgroundColor: COLORS.accent,
-          background: 'linear-gradient(90deg, rgba(255,191,80,1) 0%, rgba(224,143,0,1) 100%);',
-          padding: "1.5em",
-          color: COLORS.primary,
-          textAlign: "center",
-          fontWeight: 'bold',
-          textShadow: "2px 2px #333333"
-        }}
-      >
-        <Typography variant="h1">GREAT MINDS THINK ALIKE</Typography>
-      </div>
-      <div
-        style={{
-          flex: 1,
-          padding: "1em",
-          lineHeight: "1.8em",
-          color: COLORS.accent,
-          textAlign: "center"
-        }}
-      >
-        {TEXT_INTRO}
-      </div>
+    <div>
+      <MainTitleCard />
+      <Box display="flex" flexDirection="column">
+        <div>Enter your Table ID:</div>
+        <TextInput placeholder="Table ID" onChange={handleInputChange} />
+        <Button variant="contained" onClick={handleSubmit} style={{backgroundColor: COLORS.accent}}>
+          Enter
+        </Button>
+
+        {/* <Typography variant="h1">
+        Or, you can scan the QR code at the table:
+      </Typography> */}
+      </Box>
     </div>
   );
 };

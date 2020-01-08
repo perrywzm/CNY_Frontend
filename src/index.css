@@ -1,12 +1,14 @@
 @font-face {
   font-family: 'SentyWen';
-  src: local('./assets/SentyWen2017.ttf') format('ttf');
+  font-style: normal;
+  font-weight: normal;
+  src: url(fonts/SentyWEN2017.ttf);
 }
 
 body {
   background: url('./assets/bg.png') repeat;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+  font-family: 'SentyWen', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
