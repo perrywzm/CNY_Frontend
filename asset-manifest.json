@@ -1,0 +1,21 @@
+{
+  "files": {
+    "main.css": "/CNY_Frontend/static/css/main.4e9e7bfa.chunk.css",
+    "main.js": "/CNY_Frontend/static/js/main.6c1bdff4.chunk.js",
+    "runtime-main.js": "/CNY_Frontend/static/js/runtime-main.1a52a2e4.js",
+    "static/js/2.a6313793.chunk.js": "/CNY_Frontend/static/js/2.a6313793.chunk.js",
+    "index.html": "/CNY_Frontend/index.html",
+    "precache-manifest.1dc62767e55e9734f9928d20129e5da1.js": "/CNY_Frontend/precache-manifest.1dc62767e55e9734f9928d20129e5da1.js",
+    "service-worker.js": "/CNY_Frontend/service-worker.js",
+    "static/js/2.a6313793.chunk.js.LICENSE": "/CNY_Frontend/static/js/2.a6313793.chunk.js.LICENSE",
+    "static/media/index.css": "/CNY_Frontend/static/media/bg.e2b23dc7.png",
+    "static/media/CoinTree.css": "/CNY_Frontend/static/media/cherryblossom.701fe22b.png",
+    "static/media/cntxt.svg": "/CNY_Frontend/static/media/cntxt.4ca3826e.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.1a52a2e4.js",
+    "static/js/2.a6313793.chunk.js",
+    "static/css/main.4e9e7bfa.chunk.css",
+    "static/js/main.6c1bdff4.chunk.js"
+  ]
+}
