@@ -5,10 +5,14 @@ import HOW_TO_PLAY from "./howToPlayText";
 
 const useStyles = makeStyles({
   textContainer: {
-    flex: 1,
-    padding: "0 20px 40px 20px",
-    lineHeight: "1.8em",
+    position: "fixed",
+    bottom: 0,
+    padding: "12px 0",
+    // padding: "0 20px 40px 20px",
+    // lineHeight: "1.8em",
     color: COLORS.accent,
+    width: "100%",
+    backgroundColor: "rgba(0,0,0,0.3)",
     textAlign: "center"
   }
 });
@@ -21,7 +25,7 @@ const HowToPlay: React.FC<Props> = () => {
     <div className={classes.textContainer}>
       <b>How To Play</b>
       <br />
-      {HOW_TO_PLAY}
+      {/* {HOW_TO_PLAY} */}
     </div>
   );
 };

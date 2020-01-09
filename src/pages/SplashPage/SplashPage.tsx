@@ -6,8 +6,9 @@ import { useHistory } from "react-router-dom";
 import { useUserMedia } from "../../services/MediaService";
 import ChineseTitleCard from "../../components/ChineseTitleCard";
 import MainTitleCard from "../../components/MainTitleCard";
-import TextInput from "../../components/TextInput";
+import TextInputScroll from "../../components/TextInputScroll";
 import { COLORS } from "../../theme";
+import { useDependency } from "../../services/DependencyInjector";
 
 const useStyles = makeStyles({
   container: {
@@ -39,24 +40,27 @@ const SplashPage: React.FC<Props> = () => {
 
   const handleSubmit = async () => {
     if (isConnecting) return;
-
     setConnecting(true);
     const result = await AjaxService.submitTableId(tableId);
+    setConnecting(false);
     if (result) {
       history.push("/lobby");
     } else {
-      window.alert("Table ID has already been used or does not exist!")
-      setConnecting(false);
+      window.alert("Table ID has already been used or does not exist!");
     }
   };
 
   return (
     <div>
       <MainTitleCard />
-      <Box display="flex" flexDirection="column">
+      <Box display="flex" flexDirection="column" padding="24px">
         <div>Enter your Table ID:</div>
-        <TextInput placeholder="Table ID" onChange={handleInputChange} />
-        <Button variant="contained" onClick={handleSubmit} style={{backgroundColor: COLORS.accent}}>
+        <TextInputScroll placeholder="Table ID" onChange={handleInputChange} />
+        <Button
+          variant="contained"
+          onClick={handleSubmit}
+          style={{ background: COLORS.accent }}
+        >
           Enter
         </Button>
 
