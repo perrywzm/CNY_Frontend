@@ -1,7 +1,7 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { CircularProgress, Typography } from "@material-ui/core";
-import GameState from "../../../game/GameState";
+import GameState from "../../../models/GameState";
 
 const useStyles = makeStyles({
   baseContainer: {
