@@ -1,23 +1,23 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "949269e4c8c6248fa06fafcd05813e9d",
+    "revision": "23e861948b101d09c548149ae192ff01",
     "url": "/CNY_Frontend/index.html"
   },
   {
-    "revision": "8b924f65e9ae67dedcb0",
+    "revision": "d5ff523b59eda649ed0c",
     "url": "/CNY_Frontend/static/css/main.4e9e7bfa.chunk.css"
   },
   {
-    "revision": "5f16c344324a8cb5726e",
-    "url": "/CNY_Frontend/static/js/2.83b08844.chunk.js"
+    "revision": "5f889193a65588253f9a",
+    "url": "/CNY_Frontend/static/js/2.c9df769a.chunk.js"
   },
   {
     "revision": "749849a1b8b3daee3cba1ec55bc8cddd",
-    "url": "/CNY_Frontend/static/js/2.83b08844.chunk.js.LICENSE"
+    "url": "/CNY_Frontend/static/js/2.c9df769a.chunk.js.LICENSE"
   },
   {
-    "revision": "8b924f65e9ae67dedcb0",
-    "url": "/CNY_Frontend/static/js/main.e12cf65c.chunk.js"
+    "revision": "d5ff523b59eda649ed0c",
+    "url": "/CNY_Frontend/static/js/main.fa47038d.chunk.js"
   },
   {
     "revision": "c22627f211a9e620c037",
