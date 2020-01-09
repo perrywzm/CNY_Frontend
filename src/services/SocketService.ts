@@ -1,5 +1,5 @@
 import SockJS from "sockjs-client";
-import { Client } from "@stomp/stompjs";
+import { Client, Frame } from "@stomp/stompjs";
 import { BaseDependency } from "./DependencyInjector";
 
 // const ENDPOINT = "http://192.168.137.1:8090";
