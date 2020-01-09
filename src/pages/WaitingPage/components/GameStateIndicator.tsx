@@ -1,7 +1,7 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { CircularProgress, Typography } from "@material-ui/core";
-import GameState from "../../../models/GameState";
+import { ProgressState } from "../../../models/GameState";
 
 const useStyles = makeStyles({
   baseContainer: {
@@ -20,7 +20,7 @@ const useStyles = makeStyles({
     color: "#d3fc85",
     animation: "$fade 2s infinite linear",
     margin: "24px 8px",
-    lineHeight: "1em",
+    lineHeight: "1em"
   },
   "@keyframes fade": {
     "0%": { opacity: 1 },
@@ -30,7 +30,7 @@ const useStyles = makeStyles({
 });
 
 interface Props {
-  gameState: GameState;
+  progressState: ProgressState;
 }
 
 const GameStateIndicator: React.FC<Props> = () => {

@@ -13,7 +13,6 @@ import TitleCard from "../../components/TitleCard";
 import TableIndicator from "../../components/TableIndicator";
 import ChineseTitleCard from "../../components/ChineseTitleCard";
 import GameStateIndicator from "./components/GameStateIndicator";
-import GameState from "../../game/GameState";
 import HowToPlay from "./components/HowToPlay";
 import MainTitleCard from "../../components/MainTitleCard";
 import CoinTree from "../../components/CoinTree";
@@ -58,7 +57,7 @@ const WaitingPage: React.FC = () => {
     <div className={classes.container}>
       <Box marginTop="54px" />
       <MainTitleCard />
-      <GameStateIndicator gameState={GameState.waiting} />
+      <GameStateIndicator progressState={gameService.gameState} />
       <CoinTree />
       <HowToPlay />
       <TableIndicator name="Table 1" onClick={() => history.push("/game")} />
