@@ -16,20 +16,27 @@ const useStyles = makeStyles({
     justifyContent: "center",
     alignItems: "center"
   },
-  text: { paddingRight: 8, lineHeight: "1em" }
+  text: {
+    color: "#d3fc85",
+    animation: "$fade 2s infinite linear",
+    margin: "24px 8px",
+    lineHeight: "1em",
+  },
+  "@keyframes fade": {
+    "0%": { opacity: 1 },
+    "50%": { opacity: 0.7 },
+    "100%": { opacity: 1 }
+  }
 });
 
 interface Props {
-  gameState: GameState
+  gameState: GameState;
 }
 
 const GameStateIndicator: React.FC<Props> = () => {
   const classes = useStyles({});
   return (
     <div className={classes.baseContainer}>
-      <div className={classes.spinner}>
-        <CircularProgress color="inherit" size={24} />
-      </div>
       <Typography variant="caption" className={classes.text}>
         Please wait for the game to start
       </Typography>

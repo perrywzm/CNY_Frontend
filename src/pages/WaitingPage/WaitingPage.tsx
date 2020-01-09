@@ -16,12 +16,16 @@ import GameStateIndicator from "./components/GameStateIndicator";
 import GameState from "../../game/GameState";
 import HowToPlay from "./components/HowToPlay";
 import MainTitleCard from "../../components/MainTitleCard";
+import CoinTree from "../../components/CoinTree";
+import { useDependency } from "./../../services/DependencyInjector";
+import GameService from "./../../game/GameService";
 
 const useStyles = makeStyles({
   container: {
     display: "flex",
     flexFlow: "column",
-    height: "100%"
+    height: "100%",
+    alignItems: "stretch"
   },
   title: {
     fontSize: "40px"
@@ -38,17 +42,26 @@ const useStyles = makeStyles({
 const WaitingPage: React.FC = () => {
   const classes = useStyles({});
   const history = useHistory();
+  const socketService = useDependency(SocketService);
+  const gameService = useDependency(GameService);
 
   React.useEffect(() => {
-    const ws = new SocketService();
+    const preloadQuestions = async () => {
+      gameService.getCurrentQuestion();
+      gameService.preloadQuestion(1);
+    };
+
+    socketService.activate(gameService.handleEvent);
+    preloadQuestions();
   }, []);
   return (
     <div className={classes.container}>
-      <TableIndicator name="Table 1" onClick={() => history.push("/game")} />
       <Box marginTop="54px" />
       <MainTitleCard />
       <GameStateIndicator gameState={GameState.waiting} />
+      <CoinTree />
       <HowToPlay />
+      <TableIndicator name="Table 1" onClick={() => history.push("/game")} />
     </div>
   );
 };

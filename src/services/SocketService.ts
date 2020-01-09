@@ -1,14 +1,15 @@
 import SockJS from "sockjs-client";
 import { Client } from "@stomp/stompjs";
+import { BaseDependency } from "./DependencyInjector";
 
 // const ENDPOINT = "http://192.168.137.1:8090";
-const ENDPOINT = "http://cny-game.herokuapp.com/game";
+const ENDPOINT = "http://cnybackend.southeastasia.cloudapp.azure.com:8080/game";
 
-export default class SocketService {
+export default class SocketService extends BaseDependency {
   socket: WebSocket;
-  stompClient: any;
+  stompClient: Client;
 
-  constructor() {
+  activate(msgCallback: (msg) => void, ) {
     const stompConfig = {
       // Typically login, passcode and vhost
       // Adjust these for your broker
@@ -31,19 +32,19 @@ export default class SocketService {
     this.stompClient.webSocketFactory = () => new SockJS(ENDPOINT);
     this.stompClient.onConnect = (frame) => {
       // The return object has a method called `unsubscribe`
-      const subscription = this.stompClient.subscribe('/topic/game', function (message) {
+      const subscription = this.stompClient.subscribe('/topic/game', (message) => {
         const payload = JSON.parse(message.body);
         
         console.log(payload);
+        msgCallback(message);
       });
     }
     this.stompClient.activate();
-    // this.stompClient.connect({}, (frame) => {
-    //   this.stompClient.subscribe('/topic/game', msg => console.log(msg))
-    // })
-    // this.stompClient = Stomp.over(this.socket);
-    // ("topic/game", (msg) => {
-    //   console.log(msg);
-    // })
+  }
+
+  deactivate () {
+    if (this.stompClient && this.stompClient.active) {
+      this.stompClient.deactivate();
+    }
   }
 }

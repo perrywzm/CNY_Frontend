@@ -1,9 +1,12 @@
 import axios from "axios";
+import Question from './../models/Question';
 
 const DEBUG_MODE = false;
 const BASE_HREF = "http://cnybackend.southeastasia.cloudapp.azure.com:8080/api";
 
 export default class AjaxService {
+  static jwtHeader: { authorization?: string } = {};
+
   static submitTableId = async (tableId: string) => {
     if (DEBUG_MODE) {
       return new Promise(resolve =>
@@ -11,22 +14,26 @@ export default class AjaxService {
       );
     } else {
       try {
-        const result = await axios.post(
-          BASE_HREF + "/user/create",
-          {
-            username: tableId
-          },
-          { withCredentials: true }
-        );
+        const result = await axios.post(BASE_HREF + "/user/create", {
+          username: tableId
+        });
         console.log("Result came in!", result);
         if (result.status === 200) {
-          return;
+          AjaxService.jwtHeader = {
+            authorization: `Bearer ${result.data.token}`
+          };
+          return true;
+        } else {
+          return false;
         }
       } catch (e) {
-        if (e.response.data.error === "There is an existing username") {
+        console.log(e);
+        if (
+          e.response &&
+          e.response.data.error === "There is an existing username"
+        ) {
           return false;
         } else {
-          console.log(e.response.data);
           console.error("Error encountered when submitting table ID!", e);
           console.error("Bypassing requirements...");
           return true; //true;
@@ -35,18 +42,25 @@ export default class AjaxService {
     }
   };
 
+  static fetchCurrentQuestion = async () => {
+    return 123;
+  }
+
   static fetchQuestion = async (qnId: number | string) => {
     if (DEBUG_MODE) {
-      const a = await new Promise(resolve =>
+      await new Promise(resolve =>
         setTimeout(() => resolve({}), 1000)
       );
-      return a;
+      return null;
     } else {
       try {
-        const result = await axios.get(BASE_HREF + `/question/${qnId}`);
+        console.log(AjaxService.jwtHeader)
+        const result = await axios.get(BASE_HREF + `/question/${qnId}`, {
+          headers: AjaxService.jwtHeader
+        });
         if (result.status === 200) {
           console.log(result);
-          return result;
+          return result.data as Question;
         }
       } catch (e) {
         console.error("Error encountered when fetching question!", e);

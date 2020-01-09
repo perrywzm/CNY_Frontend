@@ -8,6 +8,7 @@ import ChineseTitleCard from "../../components/ChineseTitleCard";
 import MainTitleCard from "../../components/MainTitleCard";
 import TextInputScroll from "../../components/TextInputScroll";
 import { COLORS } from "../../theme";
+import { useDependency } from "../../services/DependencyInjector";
 
 const useStyles = makeStyles({
   container: {
@@ -39,14 +40,13 @@ const SplashPage: React.FC<Props> = () => {
 
   const handleSubmit = async () => {
     if (isConnecting) return;
-
     setConnecting(true);
     const result = await AjaxService.submitTableId(tableId);
+    setConnecting(false);
     if (result) {
       history.push("/lobby");
     } else {
-      window.alert("Table ID has already been used or does not exist!")
-      setConnecting(false);
+      window.alert("Table ID has already been used or does not exist!");
     }
   };
 
@@ -56,7 +56,11 @@ const SplashPage: React.FC<Props> = () => {
       <Box display="flex" flexDirection="column" padding="24px">
         <div>Enter your Table ID:</div>
         <TextInputScroll placeholder="Table ID" onChange={handleInputChange} />
-        <Button variant="contained" onClick={handleSubmit} style={{background: COLORS.accent}}>
+        <Button
+          variant="contained"
+          onClick={handleSubmit}
+          style={{ background: COLORS.accent }}
+        >
           Enter
         </Button>
 

@@ -9,10 +9,10 @@ const useStyles = makeStyles({
       "linear-gradient(90deg, rgba(255,191,80,1) 0%, rgba(224,143,0,1) 100%)",
     padding: "32px 12px",
     color: COLORS.primary,
-    boxShadow: 'inset 0 16px 24px -16px #333333, inset 0 -16px 24px -16px #333333',
+    boxShadow: `inset 0 16px 24px -16px ${COLORS.secondary}, inset 0 -16px 24px -16px ${COLORS.secondary}`,
     textAlign: "center",
     fontWeight: "bold",
-    textShadow: "2px 2px #333333"
+    textShadow: `0px 0px 6px ${COLORS.primary}`
   }
 });
 

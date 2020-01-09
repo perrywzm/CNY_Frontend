@@ -4,29 +4,35 @@ import ScrollImg from "../assets/scroll.png";
 import ScrollRightImg from "../assets/scrollright.png";
 import { TextField, Box } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
+import { COLORS } from "../theme";
 
 const useStyles = makeStyles({
   container: {
-    display: "flex"
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center"
   },
   left: {
-    height: "calc(1em + 16px)"
+    maxWidth: "24px",
+    objectFit: "cover"
   },
   body: {
     flex: 1,
+    height: "100%",
     backgroundImage: `url(${ScrollImg})`,
     backgroundSize: "cover",
     backgroundRepeat: "no-repeat",
     backgroundPosition: "center center"
   },
   right: {
-    height: "calc(1em + 16px)"
+    maxWidth: "24px",
+    objectFit: "fill"
   },
   textfield: {
     margin: 12,
     padding: 8,
-    backgroundColor: "rgba(0,0,0,0.2)",
-    lineHeight: "1em"
+    lineHeight: "1em",
+    color: COLORS.primary
   }
 });
 
@@ -42,10 +48,10 @@ const TextInputScroll: React.FC<Props> = props => {
       <img className={classes.left} src={ScrollLeftImg} />
       <div className={classes.body}>
         <TextField
-          className={classes.textfield}
           placeholder={props.placeholder}
           onChange={props.onChange}
           InputProps={{
+            className: classes.textfield,
             inputProps: { maxLength: 8 },
             disableUnderline: true
           }}
