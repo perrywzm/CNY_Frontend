@@ -50,6 +50,7 @@ const TextInputScroll: React.FC<Props> = props => {
         <TextField
           placeholder={props.placeholder}
           onChange={props.onChange}
+          fullWidth
           InputProps={{
             className: classes.textfield,
             inputProps: { maxLength: 8 },

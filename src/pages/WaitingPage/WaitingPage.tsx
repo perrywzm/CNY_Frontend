@@ -46,7 +46,8 @@ const WaitingPage: React.FC = () => {
 
   React.useEffect(() => {
     const preloadQuestions = async () => {
-      gameService.getCurrentQuestion();
+      gameService.getCurrentGameState();
+      gameService.getAllQuestions();
       gameService.preloadQuestion(1);
     };
 

@@ -17,7 +17,7 @@ const useStyles = makeStyles({
 });
 
 interface Props {
-  className?: Record<string, string>;
+  className?: string;
 }
 
 const TitleCard: React.FC<Props> = props => {

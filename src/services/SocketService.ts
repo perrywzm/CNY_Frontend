@@ -1,15 +1,16 @@
 import SockJS from "sockjs-client";
 import { Client, Frame } from "@stomp/stompjs";
 import { BaseDependency } from "./DependencyInjector";
+import { GameState } from "../models/GameState";
 
 // const ENDPOINT = "http://192.168.137.1:8090";
-const ENDPOINT = "http://cnybackend.southeastasia.cloudapp.azure.com:8080/game";
+const ENDPOINT = "https://cnybackend.southeastasia.cloudapp.azure.com/game";
 
 export default class SocketService extends BaseDependency {
   socket: WebSocket;
   stompClient: Client;
 
-  activate(msgCallback: (msg) => void, ) {
+  activate(msgCallback: (msg) => void) {
     const stompConfig = {
       // Typically login, passcode and vhost
       // Adjust these for your broker
@@ -21,29 +22,29 @@ export default class SocketService extends BaseDependency {
       // brokerURL: "ws://cny-game.herokuapp.com/game",
       // Keep it off for production, it can be quite verbose
       // Skip this key to disable
-      debug: function (str) {
-        console.log('STOMP: ' + str);
+      debug: function(str) {
+        console.log("STOMP: " + str);
       },
       // If disconnected, it will retry after 1s
-      reconnectDelay: 5000,
+      reconnectDelay: 5000
     };
 
     this.stompClient = new Client(stompConfig);
     this.stompClient.webSocketFactory = () => new SockJS(ENDPOINT);
     this.stompClient.onConnect = (frame: Frame) => {
-      console.log(frame)
+      console.log(frame);
       // The return object has a method called `unsubscribe`
-      const subscription = this.stompClient.subscribe('/topic/game', (message) => {
-        const payload = JSON.parse(message.body);
-        
+      const subscription = this.stompClient.subscribe("/topic/game", msg => {
+        const payload = JSON.parse(msg.body) as GameState;
+
         console.log(payload);
-        msgCallback(message);
+        msgCallback(payload);
       });
-    }
+    };
     this.stompClient.activate();
   }
 
-  deactivate () {
+  deactivate() {
     if (this.stompClient && this.stompClient.active) {
       this.stompClient.deactivate();
     }

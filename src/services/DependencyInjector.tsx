@@ -43,6 +43,7 @@ export default class DependencyProvider extends React.Component<
   }
 
   update = () => {
+    // Force a re-render in all dependents, by manually informing them of a state change
     this.setState({});
   };
 

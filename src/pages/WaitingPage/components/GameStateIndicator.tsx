@@ -1,7 +1,8 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { CircularProgress, Typography } from "@material-ui/core";
+import { CircularProgress, Typography, Box } from "@material-ui/core";
 import { ProgressState } from "../../../models/GameState";
+import { Redirect } from "react-router";
 
 const useStyles = makeStyles({
   baseContainer: {
@@ -33,15 +34,33 @@ interface Props {
   progressState: ProgressState;
 }
 
-const GameStateIndicator: React.FC<Props> = () => {
+const GameStateIndicator: React.FC<Props> = props => {
   const classes = useStyles({});
-  return (
-    <div className={classes.baseContainer}>
-      <Typography variant="caption" className={classes.text}>
-        Please wait for the game to start
-      </Typography>
-    </div>
-  );
+
+  console.log(props);
+  switch (props.progressState) {
+    case ProgressState.WAITING:
+      return (
+        <div className={classes.baseContainer}>
+          <Typography variant="caption" className={classes.text}>
+            Please wait for the game to start
+          </Typography>
+        </div>
+      );
+    case ProgressState.PLAYING:
+      return <Redirect to="/game" />;
+    case ProgressState.EMPTY:
+    default:
+      return (
+        <div className={classes.baseContainer}>
+          <Typography variant="caption" className={classes.text}>
+            {PLACEHOLDER_CHAR}
+          </Typography>
+        </div>
+      );
+  }
 };
+
+const PLACEHOLDER_CHAR = " ";
 
 export default GameStateIndicator;

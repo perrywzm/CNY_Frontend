@@ -4,20 +4,27 @@ import SplashPage from "./SplashPage/SplashPage";
 import WaitingPage from "./WaitingPage/WaitingPage";
 import GamePage from "./GamePage/GamePage";
 import ProtectedRoute from "./ProtectedRoute";
+import GameDisplay from "./GamePage/GameDisplay";
+import ScoreDisplay from "./ScoreDisplay/ScoreDisplay";
 
 const AppRouter: React.FC = () => {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={process.env.PUBLIC_URL}>
       <Switch>
-        <Route path="/" exact>
+        {/* <Route path="/score">
+          <ScoreDisplay />
+          <SplashPage />
+        </Route> */}
+        <Route exact path="/">
+          {/* <GameDisplay /> */}
           <SplashPage />
         </Route>
-        <Route path="/lobby" exact>
+        <Route path="/lobby">
           <ProtectedRoute>
             <WaitingPage />
           </ProtectedRoute>
         </Route>
-        <Route path="/game" exact>
+        <Route path="/game">
           <ProtectedRoute>
             <GamePage />
           </ProtectedRoute>

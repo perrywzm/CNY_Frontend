@@ -1,8 +1,9 @@
 import axios from "axios";
-import Question from './../models/Question';
+import Question from "./../models/Question";
+import { GameState } from "../models/GameState";
 
 const DEBUG_MODE = false;
-const BASE_HREF = "http://cnybackend.southeastasia.cloudapp.azure.com:8080/api";
+const BASE_HREF = "https://cnybackend.southeastasia.cloudapp.azure.com/api";
 
 export default class AjaxService {
   static jwtHeader: { authorization?: string } = {};
@@ -42,24 +43,48 @@ export default class AjaxService {
     }
   };
 
-  static fetchCurrentQuestion = async () => {
-    return 123;
-  }
+  static fetchAllQuestions = async () => {
+    try {
+      const result = await axios.get(BASE_HREF + `/question/all`, {
+        headers: AjaxService.jwtHeader
+      });
+      if (result.status === 200) {
+        console.log("Getting all your questions", result.data);
+        return result.data as Question[];
+      }
+    } catch (e) {
+      console.error("Error encountered when fetching question!", e);
+      return null;
+    }
+  };
 
-  static fetchQuestion = async (qnId: number | string) => {
+  static getCurrentGameState = async () => {
+    try {
+      const result = await axios.get(BASE_HREF + `/game/state`, {
+        headers: AjaxService.jwtHeader
+      });
+      if (result.status === 200) {
+        console.log("Getting current game state", result.data);
+        return result.data as GameState;
+      } else {
+        return null;
+      }
+    } catch (e) {
+      console.error("Error encountered when fetching question!", e);
+      return null;
+    }
+  };
+
+  static fetchQuestion = async (qnPos: number | string) => {
     if (DEBUG_MODE) {
-      await new Promise(resolve =>
-        setTimeout(() => resolve({}), 1000)
-      );
+      await new Promise(resolve => setTimeout(() => resolve({}), 1000));
       return null;
     } else {
       try {
-        console.log(AjaxService.jwtHeader)
-        const result = await axios.get(BASE_HREF + `/question/${qnId}`, {
+        const result = await axios.get(BASE_HREF + `/question/${qnPos}`, {
           headers: AjaxService.jwtHeader
         });
         if (result.status === 200) {
-          console.log(result);
           return result.data as Question;
         }
       } catch (e) {
@@ -68,4 +93,40 @@ export default class AjaxService {
       }
     }
   };
+
+  static submitAnswer = async (qnPos: number, option: number) => {
+    try {
+      const result = await axios.post(
+        BASE_HREF + `/answer/submit/${qnPos}`,
+        { choice: option },
+        { headers: AjaxService.jwtHeader }
+      );
+      if (result.status === 200) {
+        // console.log("RESPONSE FROM SUBMISSION", result)
+        return result.data.choice as number;
+        // return result.data as Question;
+      } else {
+        return null;
+      }
+    } catch (e) {
+      console.error("Error encountered when submitting answer!", e);
+      return null;
+    }
+  };
+
+  static fetchQuestionResults = async (qnPos: number) => {
+    try {
+      const result = await axios.get(BASE_HREF + `/poll/${qnPos}`, {
+        headers: AjaxService.jwtHeader
+      });
+      if (result.status === 200) {
+        return result;
+      } else {
+        return null;
+      }
+    } catch (e) {
+      console.error("Error encountered when fetching question!", e);
+      return null;
+    }
+  }
 }

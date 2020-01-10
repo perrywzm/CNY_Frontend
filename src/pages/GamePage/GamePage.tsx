@@ -3,9 +3,14 @@ import { makeStyles } from "@material-ui/core/styles";
 import GameService from "./../../game/GameService";
 import TitleCard from "../../components/TitleCard";
 import TableIndicator from "../../components/TableIndicator";
-import { Box } from "@material-ui/core";
+import { Box, Button } from "@material-ui/core";
 import { useDependency } from "./../../services/DependencyInjector";
 import ImageOptions from "./ImageOptions";
+import { COLORS } from "../../theme";
+import AjaxService from "../../services/AjaxService";
+import Ranking from "./Ranking";
+import { QuestionState } from "../../models/GameState";
+import ScoreDisplay from "./ScoreDisplay";
 
 const useStyles = makeStyles({
   container: {
@@ -15,27 +20,93 @@ const useStyles = makeStyles({
   },
   title: {
     fontSize: "40px"
+  },
+  button: {
+    backgroundColor: COLORS.accent
   }
 });
 
 const GamePage: React.FC = () => {
   const classes = useStyles({});
   const gameService = useDependency(GameService);
+  const [selected, setSelected] = React.useState<number>(null);
 
   React.useEffect(() => {
-    gameService.preloadQuestion(1);
-    gameService.score++;
-    console.log("Score", gameService.score);
-  }, []);
-  console.log("Game service has", gameService.questions);
+    if (
+      gameService.currentAnswer !== null &&
+      gameService.currentAnswer !== undefined
+    ) {
+      setSelected(prev => gameService.currentAnswer);
+    }
+  }, [gameService.currentAnswer]);
+
+  const currentQn = gameService.getCurrentQuestion();
+
+  const selectOption = (option: number) => {
+    setSelected(option);
+    gameService.currentAnswer = null;
+    AjaxService.submitAnswer(currentQn.position, option).then(res => {
+      console.log("Received response with", res);
+      gameService.handleSubmitResponse(res);
+    });
+  };
+
+  console.log("Game service has", gameService.questionsMap, selected);
+
+  const renderOptionsContent = () => {
+    if (currentQn) {
+      return (
+        <>
+          <TitleCard>{currentQn.title}</TitleCard>
+          <Box
+            display="flex"
+            height="100%"
+            flexDirection="column"
+            padding="24px"
+          >
+            <ImageOptions
+              question={currentQn}
+              selected={selected}
+              isConfirmedSelection={selected === gameService.currentAnswer}
+              onSelect={selectOption}
+            />
+          </Box>
+        </>
+      );
+    } else {
+      return (
+        <>
+          <TitleCard>{"No question found!"}</TitleCard>
+        </>
+      );
+    }
+  };
+
   return (
-    <div className={classes.container}>
-      <TableIndicator name="Table 1" onClick={() => console.log(123)} />
+    <div className={classes.container} onClick={() => wtf(gameService)}>
+      <TableIndicator name="Table 1" />
+      <ScoreDisplay />
       <Box marginTop="54px" />
-      <TitleCard>{gameService.questions.get(1).title}</TitleCard>
-      <ImageOptions question={gameService.questions.get(1)} />
+      {renderOptionsContent()}
+      <Ranking
+        show={gameService.questionState === QuestionState.END}
+        rank={gameService.rank}
+      />
     </div>
   );
+};
+
+const wtf = (gameService: GameService) => {
+  AjaxService.fetchQuestionResults(gameService.currentQuestionPos).then(res => {
+    console.log("Placeholder fetch question results", res);
+    gameService.rank++;
+    gameService.update();
+  });
+  gameService.questionState =
+    gameService.questionState === QuestionState.END
+      ? QuestionState.START
+      : QuestionState.END;
+  gameService.update();
 };
 
 export default GamePage;

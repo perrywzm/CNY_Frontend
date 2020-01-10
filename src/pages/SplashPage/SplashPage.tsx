@@ -8,7 +8,6 @@ import ChineseTitleCard from "../../components/ChineseTitleCard";
 import MainTitleCard from "../../components/MainTitleCard";
 import TextInputScroll from "../../components/TextInputScroll";
 import { COLORS } from "../../theme";
-import { useDependency } from "../../services/DependencyInjector";
 
 const useStyles = makeStyles({
   container: {
@@ -34,6 +33,15 @@ const SplashPage: React.FC<Props> = () => {
   const [isConnecting, setConnecting] = React.useState(false);
   const [tableId, setTableId] = React.useState("");
 
+  React.useEffect(() => {
+    const jwtToken = sessionStorage.getItem("CNYTable");
+
+    if (jwtToken) {
+      AjaxService.jwtHeader = JSON.parse(jwtToken);
+      history.push("/lobby");
+    }
+  }, []);
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTableId(e.target.value);
   };
@@ -44,6 +52,7 @@ const SplashPage: React.FC<Props> = () => {
     const result = await AjaxService.submitTableId(tableId);
     setConnecting(false);
     if (result) {
+      sessionStorage.setItem("CNYTable", JSON.stringify(AjaxService.jwtHeader));
       history.push("/lobby");
     } else {
       window.alert("Table ID has already been used or does not exist!");

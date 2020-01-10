@@ -8,10 +8,10 @@ import dependencies from "./common/dependencies";
 const App: React.FC = () => {
   return (
     <DependencyProvider dependencies={dependencies}>
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <AppRouter />
-      </ThemeProvider>
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+          <AppRouter />
+        </ThemeProvider>
     </DependencyProvider>
   );
 };
