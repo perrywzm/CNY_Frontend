@@ -1,24 +1,25 @@
 {
   "files": {
     "main.css": "/CNY_Frontend/static/css/main.4e9e7bfa.chunk.css",
-    "main.js": "/CNY_Frontend/static/js/main.8886374c.chunk.js",
+    "main.js": "/CNY_Frontend/static/js/main.255e589a.chunk.js",
     "runtime-main.js": "/CNY_Frontend/static/js/runtime-main.1a52a2e4.js",
-    "static/js/2.09d5328b.chunk.js": "/CNY_Frontend/static/js/2.09d5328b.chunk.js",
+    "static/js/2.e3523463.chunk.js": "/CNY_Frontend/static/js/2.e3523463.chunk.js",
     "index.html": "/CNY_Frontend/index.html",
-    "precache-manifest.f551843419aa5464cd3919b8092b0206.js": "/CNY_Frontend/precache-manifest.f551843419aa5464cd3919b8092b0206.js",
+    "precache-manifest.786b3a3bd2bd837e178e65a9333d11de.js": "/CNY_Frontend/precache-manifest.786b3a3bd2bd837e178e65a9333d11de.js",
     "service-worker.js": "/CNY_Frontend/service-worker.js",
-    "static/js/2.09d5328b.chunk.js.LICENSE": "/CNY_Frontend/static/js/2.09d5328b.chunk.js.LICENSE",
+    "static/js/2.e3523463.chunk.js.LICENSE": "/CNY_Frontend/static/js/2.e3523463.chunk.js.LICENSE",
     "static/media/index.css": "/CNY_Frontend/static/media/bg.e2b23dc7.png",
     "static/media/CoinTree.css": "/CNY_Frontend/static/media/cherryblossom.701fe22b.png",
     "static/media/cntxt.svg": "/CNY_Frontend/static/media/cntxt.4ca3826e.svg",
+    "static/media/lantern.png": "/CNY_Frontend/static/media/lantern.ec9762cb.png",
     "static/media/scroll.png": "/CNY_Frontend/static/media/scroll.ab5e83c1.png",
     "static/media/scrollleft.png": "/CNY_Frontend/static/media/scrollleft.e66eb0a9.png",
     "static/media/scrollright.png": "/CNY_Frontend/static/media/scrollright.d6cf0420.png"
   },
   "entrypoints": [
     "static/js/runtime-main.1a52a2e4.js",
-    "static/js/2.09d5328b.chunk.js",
+    "static/js/2.e3523463.chunk.js",
     "static/css/main.4e9e7bfa.chunk.css",
-    "static/js/main.8886374c.chunk.js"
+    "static/js/main.255e589a.chunk.js"
   ]
 }
