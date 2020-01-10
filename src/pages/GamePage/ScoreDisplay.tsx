@@ -1,33 +1,35 @@
-import React from 'react'
+import React from "react";
 import LanternImg from "../../assets/lantern.png";
-import { makeStyles } from '@material-ui/core';
+import { makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles({
   container: {
-    position: "absolute",
+    position: "fixed",
     top: -12,
     left: 0,
-    padding: "12px 24px 24px 24px",
+    padding: "24px 30px 30px 30px",
     background: `url(${LanternImg}) no-repeat`,
     backgroundSize: "cover",
     textAlign: "center",
-    fontSize: "0.8em"
+    fontSize: "1em",
+    lineHeight: "1.2em",
+    overflow: "visible"
   }
-})
+});
 
 interface Props {
-  
+  score?: number;
 }
 
-const ScoreDisplay: React.FC<Props> = (props) => {
+const ScoreDisplay: React.FC<Props> = props => {
   const classes = useStyles({});
   return (
     <div className={classes.container}>
       Score:
       <br />
-      123
+      <b>{props.score || "0"}</b>
     </div>
-  )
-}
+  );
+};
 
-export default ScoreDisplay
+export default ScoreDisplay;

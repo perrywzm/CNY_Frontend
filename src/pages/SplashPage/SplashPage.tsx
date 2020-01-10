@@ -8,6 +8,8 @@ import ChineseTitleCard from "../../components/ChineseTitleCard";
 import MainTitleCard from "../../components/MainTitleCard";
 import TextInputScroll from "../../components/TextInputScroll";
 import { COLORS } from "../../theme";
+import { useDependency } from "./../../services/DependencyInjector";
+import GameService from "./../../game/GameService";
 
 const useStyles = makeStyles({
   container: {
@@ -25,6 +27,8 @@ interface Props {}
 const SplashPage: React.FC<Props> = () => {
   const classes = useStyles({});
   const history = useHistory();
+  const gameService = useDependency(GameService);
+  console.log(gameService)
   // const mediaStream = useUserMedia({
   //   audio: false,
   //   video: { facingMode: "environment" }
@@ -34,11 +38,23 @@ const SplashPage: React.FC<Props> = () => {
   const [tableId, setTableId] = React.useState("");
 
   React.useEffect(() => {
-    const jwtToken = sessionStorage.getItem("CNYTable");
+    const jwtToken = localStorage.getItem("CNYTable");
 
     if (jwtToken) {
       AjaxService.jwtHeader = JSON.parse(jwtToken);
-      history.push("/lobby");
+
+      if (!AjaxService.jwtHeader.authorization) {
+        localStorage.removeItem("CNYTable");
+      } else {
+        gameService.getCurrentGameState().then(res => {
+          if (res) {
+            history.push("/lobby");
+          } else {
+            localStorage.removeItem("CNYTable");
+            window.alert("Please login again.");
+          }
+        });
+      }
     }
   }, []);
 
@@ -49,12 +65,17 @@ const SplashPage: React.FC<Props> = () => {
   const handleSubmit = async () => {
     if (isConnecting) return;
     setConnecting(true);
-    const result = await AjaxService.submitTableId(tableId);
+    const result = await AjaxService.submitTableId(tableId, "create");
     setConnecting(false);
     if (result) {
-      sessionStorage.setItem("CNYTable", JSON.stringify(AjaxService.jwtHeader));
+      localStorage.setItem("CNYTable", JSON.stringify(AjaxService.jwtHeader));
       history.push("/lobby");
     } else {
+      const loginResult = await AjaxService.submitTableId(tableId, "login");
+      if (loginResult) {
+        localStorage.setItem("CNYTable", JSON.stringify(AjaxService.jwtHeader));
+        history.push("/lobby");
+      }
       window.alert("Table ID has already been used or does not exist!");
     }
   };

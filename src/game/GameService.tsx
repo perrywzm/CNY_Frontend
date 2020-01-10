@@ -4,8 +4,10 @@ import Question from "../models/Question";
 import { GameState, ProgressState, QuestionState } from "../models/GameState";
 
 export default class GameService extends BaseDependency {
-  // gameState = ProgressState.EMPTY;
-  gameState = ProgressState.PLAYING;
+  static id = "GameService";
+
+  gameState = ProgressState.EMPTY;
+  // gameState = ProgressState.END;
   currentQuestionPos: number = 1;
   questionState = QuestionState.START;
   currentAnswer: number;
@@ -24,6 +26,7 @@ export default class GameService extends BaseDependency {
   };
 
   getCurrentGameState = async () => {
+    // return;
     const result = await AjaxService.getCurrentGameState();
     if (result) {
       this.gameState = result.progress;
@@ -35,11 +38,15 @@ export default class GameService extends BaseDependency {
           this.currentQuestionPos
         );
         this.questionsMap.set(currentQn.position, currentQn);
+        this.getUserState();
 
         // TODO: Fetch answer for current question
       }
 
       this.update();
+      return true;
+    } else {
+      return false;
     }
   };
 
@@ -60,9 +67,17 @@ export default class GameService extends BaseDependency {
     this.update();
   };
 
-  handleQuestionResponse = () => {
-    const response = 123
-  }
+  getUserState = async () => {
+    if (this.questionState === QuestionState.END) {
+      const response = await AjaxService.fetchUserRank();
+      if (response) {
+        const [rank, score] = response;
+        this.rank = rank;
+        this.score = score;
+        this.update();
+      }
+    }
+  };
 
   handleEvent = (msg: GameState) => {
     console.log("Handling", msg);
@@ -80,6 +95,7 @@ export default class GameService extends BaseDependency {
         this.currentQuestionPos = msg.question;
         this.gameState = ProgressState.PLAYING;
         this.questionState = msg.questionState;
+        this.getUserState();
         this.update();
         break;
       case ProgressState.END:

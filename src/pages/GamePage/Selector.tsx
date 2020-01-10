@@ -42,8 +42,6 @@ interface Props {
 const Selector: React.FC<Props> = props => {
   const classes = useStyles({ selected: props.selected });
 
-  console.log("PROPPPPPPPPPPPPPPP", props);
-
   const renderSelectorContent = () => {
     if (props.selected) {
       if (props.isConfirmedSelection) {

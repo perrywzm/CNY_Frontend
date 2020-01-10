@@ -3,21 +3,32 @@ import Question from "./../models/Question";
 import { GameState } from "../models/GameState";
 
 const DEBUG_MODE = false;
+const BASE_BASE_HREF = "https://cnybackend.southeastasia.cloudapp.azure.com/";
 const BASE_HREF = "https://cnybackend.southeastasia.cloudapp.azure.com/api";
 
 export default class AjaxService {
   static jwtHeader: { authorization?: string } = {};
 
-  static submitTableId = async (tableId: string) => {
+  static submitTableId = async (
+    tableId: string,
+    mode: "create" | "login" = "create"
+  ) => {
     if (DEBUG_MODE) {
       return new Promise(resolve =>
         setTimeout(() => resolve(tableId === "123"), 1000)
       );
     } else {
       try {
-        const result = await axios.post(BASE_HREF + "/user/create", {
-          username: tableId
-        });
+        let result;
+        if (mode === "create") {
+          result = await axios.post(BASE_HREF + "/user/create", {
+            username: tableId
+          });
+        } else {
+          result = await axios.post(BASE_BASE_HREF + "/authenticate", {
+            username: tableId
+          });
+        }
         console.log("Result came in!", result);
         if (result.status === 200) {
           AjaxService.jwtHeader = {
@@ -128,5 +139,22 @@ export default class AjaxService {
       console.error("Error encountered when fetching question!", e);
       return null;
     }
-  }
+  };
+
+  static fetchUserRank = async (): Promise<number[]> => {
+    try {
+      const result = await axios.get(BASE_HREF + "/user/rank", {
+        headers: AjaxService.jwtHeader
+      });
+      console.log(result);
+      if (result.status === 200) {
+        return [result.data.rank, result.data.score];
+      } else {
+        return null;
+      }
+    } catch (e) {
+      console.error("Error encountered when fetching question!", e);
+      return null;
+    }
+  };
 }

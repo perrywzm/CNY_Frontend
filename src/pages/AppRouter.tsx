@@ -6,6 +6,7 @@ import GamePage from "./GamePage/GamePage";
 import ProtectedRoute from "./ProtectedRoute";
 import GameDisplay from "./GamePage/GameDisplay";
 import ScoreDisplay from "./ScoreDisplay/ScoreDisplay";
+import EndingPage from "./EndingPage/EndingPage";
 
 const AppRouter: React.FC = () => {
   return (
@@ -15,10 +16,6 @@ const AppRouter: React.FC = () => {
           <ScoreDisplay />
           <SplashPage />
         </Route> */}
-        <Route exact path="/">
-          {/* <GameDisplay /> */}
-          <SplashPage />
-        </Route>
         <Route path="/lobby">
           <ProtectedRoute>
             <WaitingPage />
@@ -28,6 +25,15 @@ const AppRouter: React.FC = () => {
           <ProtectedRoute>
             <GamePage />
           </ProtectedRoute>
+        </Route>
+        <Route path="/end">
+          <ProtectedRoute>
+            <EndingPage />
+          </ProtectedRoute>
+        </Route>
+        <Route path="/">
+          {/* <GameDisplay /> */}
+          <SplashPage />
         </Route>
       </Switch>
     </BrowserRouter>

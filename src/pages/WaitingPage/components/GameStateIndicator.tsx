@@ -47,6 +47,7 @@ const GameStateIndicator: React.FC<Props> = props => {
           </Typography>
         </div>
       );
+    case ProgressState.END:
     case ProgressState.PLAYING:
       return <Redirect to="/game" />;
     case ProgressState.EMPTY:

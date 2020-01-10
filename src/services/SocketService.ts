@@ -7,6 +7,7 @@ import { GameState } from "../models/GameState";
 const ENDPOINT = "https://cnybackend.southeastasia.cloudapp.azure.com/game";
 
 export default class SocketService extends BaseDependency {
+  static id = "SocketService";
   socket: WebSocket;
   stompClient: Client;
 

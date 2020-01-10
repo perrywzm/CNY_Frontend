@@ -1,18 +1,23 @@
 import React from "react";
 import LanternImg from "../../assets/lantern.png";
-import { makeStyles, Typography } from "@material-ui/core";
+import { makeStyles, Typography, Modal } from "@material-ui/core";
 import { COLORS } from "./../../theme";
+import ModalOverlay from "../../components/ModalOverlay";
 
 const useStyles = makeStyles({
   container: {
-    position: "absolute",
+    position: "fixed",
     display: "flex",
     width: "100%",
     justifyContent: "center",
     height: "100%",
     top: (props: Props) => (props.show ? 0 : "-100%"),
     transition: "top 0.3s ease-out",
-    overflow: "hidden"
+    overflow: "hidden",
+    userSelect: "none",
+    "&:focus": {
+      outline: "none"
+    }
   },
   lantern: {
     display: "block",
@@ -20,14 +25,9 @@ const useStyles = makeStyles({
     height: "auto"
   },
   overlay: {
-    position: "absolute",
-    top: 0,
-    display: "block",
-    height: "100vh",
-    width: "100vw",
-    background: "#000",
     opacity: (props: Props) => (props.show ? 0.5 : 0),
-    transition: "opacity 0.3s"
+    display: (props: Props) => (props.show ? "block" : "none"),
+    transition: "opacity 0.3s, display 0.3s"
   },
   textContainer: {
     color: COLORS.accent,
@@ -49,16 +49,18 @@ const Ranking: React.FC<Props> = props => {
   const classes = useStyles(props);
   return (
     <>
-      <div className={classes.overlay} />
-      <div className={classes.container}>
-        <img className={classes.lantern} src={LanternImg} />
-        <div className={classes.textContainer}>
-          <Typography variant="h1">Your Ranking:</Typography>
-          <Typography variant="h1" className={classes.giantTitle}>
-            {props.rank}
-          </Typography>
+      <Modal keepMounted open={props.show}>
+        <div className={classes.container}>
+          {/* <ModalOverlay className={classes.overlay} /> */}
+          <img className={classes.lantern} src={LanternImg} />
+          <div className={classes.textContainer}>
+            <Typography variant="h1">Your Ranking:</Typography>
+            <Typography variant="h1" className={classes.giantTitle}>
+              {props.rank}
+            </Typography>
+          </div>
         </div>
-      </div>
+      </Modal>
     </>
   );
 };

@@ -27,7 +27,7 @@ const ImageOptions: React.FC<Props> = props => {
         return (
           <GridListTile
             classes={{ tile: classes.tile }}
-            onClick={() => props.onSelect(image.id)}
+            onClick={() => {console.log(234343434);props.onSelect(image.id)}}
           >
             <PureImage url={image.url} />
             <ImageTitle>{image.title}</ImageTitle>
@@ -65,7 +65,7 @@ const ImageOptions: React.FC<Props> = props => {
 
 const _PureImage: React.FC<{ url: string }> = props => {
   console.log("Rerendered image")
-  return <img src={props.url} style={{objectFit: "cover"}} />;
+  return <img src={props.url} style={{objectFit: "cover", height: "100%", width:"100%"}} />;
 };
 const PureImage = React.memo(_PureImage);
 

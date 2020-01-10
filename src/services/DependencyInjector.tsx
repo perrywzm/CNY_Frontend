@@ -6,6 +6,7 @@ interface DependencyProviderProps {
 }
 
 export abstract class BaseDependency {
+  static id: string;
   update: () => void;
   dispose: () => {};
 }
@@ -31,11 +32,14 @@ export default class DependencyProvider extends React.Component<
 
     const dependencies = {};
     for (let Dep of props.dependencies) {
-      dependencies[Dep.name] = new Dep();
-      dependencies[Dep.name].update = this.update;
+      const DepAny = Dep as any;
+      console.log("Dependency id is", DepAny.id);
+      dependencies[DepAny.id] = new Dep();
+      dependencies[DepAny.id].update = this.update;
     }
 
     this.state = { dependencies };
+    console.log("Dependencies are", dependencies);
   }
 
   componentWillUnmount() {
@@ -61,5 +65,5 @@ export const useDependency = <T extends BaseDependency>(
 ) => {
   const state = React.useContext(DependencyContext);
   console.log(state);
-  return state.dependencies[dependency.name] as T;
+  return state.dependencies[(dependency as any).id] as T;
 };

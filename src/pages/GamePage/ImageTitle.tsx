@@ -7,8 +7,8 @@ const useStyles = makeStyles({
     width: "100%",
     bottom: 0,
     padding: "2px 8px",
-    backgroundColor: "rgba(0,0,0,0.2)",
-    textShadow: "0 0 4px #000, 0 0 4px #000",
+    backgroundColor: "rgba(0,0,0,0.3)",
+    textShadow: "0 0 4px #000, 0 0 6px #000",
     lineHeight: "1em"
   }
 });

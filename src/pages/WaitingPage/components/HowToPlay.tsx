@@ -1,7 +1,7 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { COLORS } from "../../../theme";
-import HOW_TO_PLAY from "./howToPlayText";
+import HowToPlayDisplay from "./HowToPlayDisplay";
 
 const useStyles = makeStyles({
   textContainer: {
@@ -21,12 +21,15 @@ interface Props {}
 
 const HowToPlay: React.FC<Props> = () => {
   const classes = useStyles({});
+  const [showHTP, setShowHTP] = React.useState(false);
   return (
-    <div className={classes.textContainer}>
-      <b>How To Play</b>
-      <br />
-      {/* {HOW_TO_PLAY} */}
-    </div>
+    <>
+      <div className={classes.textContainer} onClick={() => setShowHTP(true)}>
+        <b>How To Play</b>
+        <br />
+      </div>
+      <HowToPlayDisplay show={showHTP} onClose={() => setShowHTP(false)} />
+    </>
   );
 };
 
