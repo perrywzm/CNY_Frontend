@@ -7,7 +7,8 @@ import {
 } from "@material-ui/core";
 import TitleCard from "../../components/TitleCard";
 import { COLORS } from "../../theme";
-import { useHistory } from 'react-router-dom';
+import { useHistory } from "react-router-dom";
+import ProjectionAjaxService from "../../services/ProjectionAjaxService";
 
 const useStyles = makeStyles({
   container: {
@@ -26,24 +27,83 @@ interface Props {}
 const ScoreDisplay: React.FC<Props> = () => {
   const classes = useStyles({});
   const history = useHistory();
+
+  React.useEffect(() => {
+    ProjectionAjaxService.fetchQuestionResults();
+  }, []);
+  
   return (
-    <div className={classes.container} onClick={() => history.push("/")}>
+    <div
+      className={classes.container}
+      onClick={() => history.push("/projection-qn")}
+    >
       <TitleCard className={classes.title}>CNY SNACKS</TitleCard>
-      <div style={{ padding: 24, height: "100%", display: "flex", alignItems: "flex-end" }}>
-        <div style={{margin: "4px 5vw", flex: 1, height: "40vh", background: COLORS.accent}} />
-        <div style={{margin: "4px 5vw",flex: 1,height: "50vh", background: COLORS.accent}} />
-        <div style={{margin: "4px 5vw",flex: 1,height: "30vh", background: COLORS.accent}} />
-        <div style={{margin: "4px 5vw",flex: 1,height: "24vh", background: COLORS.accent}} />
-        <div style={{margin: "4px 5vw",flex: 1,height: "10vh", background: COLORS.accent}} />
-        <div style={{margin: "4px 5vw",flex: 1,height: "36vh", background: COLORS.accent}} />
+      <div
+        style={{
+          padding: 24,
+          height: "100%",
+          display: "flex",
+          alignItems: "flex-end"
+        }}
+      >
+        <div
+          style={{
+            margin: "4px 5vw",
+            flex: 1,
+            height: "40vh",
+            background: COLORS.accent
+          }}
+        />
+        <div
+          style={{
+            margin: "4px 5vw",
+            flex: 1,
+            height: "50vh",
+            background: COLORS.accent
+          }}
+        />
+        <div
+          style={{
+            margin: "4px 5vw",
+            flex: 1,
+            height: "30vh",
+            background: COLORS.accent
+          }}
+        />
+        <div
+          style={{
+            margin: "4px 5vw",
+            flex: 1,
+            height: "24vh",
+            background: COLORS.accent
+          }}
+        />
+        <div
+          style={{
+            margin: "4px 5vw",
+            flex: 1,
+            height: "10vh",
+            background: COLORS.accent
+          }}
+        />
+        <div
+          style={{
+            margin: "4px 5vw",
+            flex: 1,
+            height: "36vh",
+            background: COLORS.accent
+          }}
+        />
       </div>
       <GridList style={{ padding: 24 }} cols={qns.images.length}>
-        {qns.images.map(image => (
-          <GridListTile style={{ padding: 4, height: "100%" }}>
-            <img src={image.url} />
-            <GridListTileBar subtitle={image.title} />
-          </GridListTile>
-        ))}
+        {qns.images
+          .sort((a, b) => a.id - b.id)
+          .map(image => (
+            <GridListTile style={{ padding: 4, height: "100%" }}>
+              <img src={image.url} />
+              <GridListTileBar subtitle={image.title} />
+            </GridListTile>
+          ))}
       </GridList>
     </div>
   );

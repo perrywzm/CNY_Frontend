@@ -12,10 +12,12 @@ const AppRouter: React.FC = () => {
   return (
     <BrowserRouter basename={process.env.PUBLIC_URL}>
       <Switch>
-        {/* <Route path="/score">
+        <Route path="/projection-qn">
+          <GameDisplay />
+        </Route>
+        <Route path="/projection-score">
           <ScoreDisplay />
-          <SplashPage />
-        </Route> */}
+        </Route>
         <Route path="/lobby">
           <ProtectedRoute>
             <WaitingPage />

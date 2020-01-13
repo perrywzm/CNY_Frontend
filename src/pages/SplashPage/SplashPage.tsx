@@ -2,7 +2,7 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Input, Button, Typography, Box, TextField } from "@material-ui/core";
 import AjaxService from "../../services/AjaxService";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import { useUserMedia } from "../../services/MediaService";
 import ChineseTitleCard from "../../components/ChineseTitleCard";
 import MainTitleCard from "../../components/MainTitleCard";
@@ -10,6 +10,7 @@ import TextInputScroll from "../../components/TextInputScroll";
 import { COLORS } from "../../theme";
 import { useDependency } from "./../../services/DependencyInjector";
 import GameService from "./../../game/GameService";
+import queryString from "query-string";
 
 const useStyles = makeStyles({
   container: {
@@ -26,18 +27,31 @@ interface Props {}
 
 const SplashPage: React.FC<Props> = () => {
   const classes = useStyles({});
+  const location = useLocation();
   const history = useHistory();
   const gameService = useDependency(GameService);
-  console.log(gameService)
-  // const mediaStream = useUserMedia({
-  //   audio: false,
-  //   video: { facingMode: "environment" }
-  // });
-  // console.log(mediaStream)
+  console.log(gameService);
+
   const [isConnecting, setConnecting] = React.useState(false);
   const [tableId, setTableId] = React.useState("");
 
   React.useEffect(() => {
+    // Check for URL params
+    const tryLogin = async (tableId: string) => {
+      const loginResult = await AjaxService.submitTableId(tableId, "login");
+      if (loginResult) {
+        localStorage.setItem("CNYTable", JSON.stringify(AjaxService.jwtHeader));
+        history.push("/lobby");
+      } else {
+        window.alert("Table ID has already been used or does not exist!");
+      }
+    };
+    const queryParams = queryString.parse(location.search);
+    if (queryParams.tableId) {
+      tryLogin(queryParams.tableId.toString());
+    }
+
+    // Otherwise, try to find local JWT
     const jwtToken = localStorage.getItem("CNYTable");
 
     if (jwtToken) {

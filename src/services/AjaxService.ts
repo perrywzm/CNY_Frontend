@@ -3,7 +3,7 @@ import Question from "./../models/Question";
 import { GameState } from "../models/GameState";
 
 const DEBUG_MODE = false;
-const BASE_BASE_HREF = "https://cnybackend.southeastasia.cloudapp.azure.com/";
+const BASE_BASE_HREF = "https://cnybackend.southeastasia.cloudapp.azure.com";
 const BASE_HREF = "https://cnybackend.southeastasia.cloudapp.azure.com/api";
 
 export default class AjaxService {
@@ -47,8 +47,7 @@ export default class AjaxService {
           return false;
         } else {
           console.error("Error encountered when submitting table ID!", e);
-          console.error("Bypassing requirements...");
-          return true; //true;
+          return false; //true;
         }
       }
     }
@@ -130,6 +129,7 @@ export default class AjaxService {
       const result = await axios.get(BASE_HREF + `/poll/${qnPos}`, {
         headers: AjaxService.jwtHeader
       });
+      console.log(result);
       if (result.status === 200) {
         return result;
       } else {

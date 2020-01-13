@@ -11,6 +11,7 @@ export default class GameService extends BaseDependency {
   currentQuestionPos: number = 1;
   questionState = QuestionState.START;
   currentAnswer: number;
+  correctAnswer: number = null;
   score = 0;
   rank = 0;
   questionsMap: Map<string | number, Question> = new Map();
@@ -75,6 +76,11 @@ export default class GameService extends BaseDependency {
         this.rank = rank;
         this.score = score;
         this.update();
+      }
+
+      const qnAns = await AjaxService.fetchQuestionResults(this.currentQuestionPos);
+      if (qnAns) {
+        
       }
     }
   };
