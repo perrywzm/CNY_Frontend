@@ -7,6 +7,9 @@ import {
 } from "@material-ui/core";
 import TitleCard from "../../components/TitleCard";
 import { useHistory } from 'react-router-dom';
+import { useDependency } from './../../services/DependencyInjector';
+import GameService from "../../game/GameService";
+import ProjectionAjaxService from "../../services/ProjectionAjaxService";
 
 const useStyles = makeStyles({
   container: {
@@ -25,8 +28,17 @@ interface Props {}
 const GameDisplay: React.FC<Props> = () => {
   const classes = useStyles({});
   const history = useHistory();
+  const gameService = useDependency(GameService);
 
-  
+  React.useEffect(() => {
+    if (!gameService.isFetchingAllQuestions) gameService.getAllQuestions(false);
+  }, [])
+
+  React.useEffect(() => {
+    ProjectionAjaxService.fetchQuestionResults(gameService.currentQuestionPos);
+  }, [gameService.currentQuestionPos, gameService.gameState])
+
+  if (gameService.questionsMap.size === 0) return <></>;
 
   return (
     <div className={classes.container} onClick={() => history.push("/projection-score")}>

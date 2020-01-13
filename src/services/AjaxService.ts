@@ -53,11 +53,12 @@ export default class AjaxService {
     }
   };
 
-  static fetchAllQuestions = async () => {
+  static fetchAllQuestions = async (withAuth = true) => {
     try {
-      const result = await axios.get(BASE_HREF + `/question/all`, {
-        headers: AjaxService.jwtHeader
-      });
+      const result = await axios.get(
+        BASE_HREF + `/question/all`,
+        withAuth ? { headers: AjaxService.jwtHeader } : {}
+      );
       if (result.status === 200) {
         console.log("Getting all your questions", result.data);
         return result.data as Question[];

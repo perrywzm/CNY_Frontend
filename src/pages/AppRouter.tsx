@@ -33,8 +33,7 @@ const AppRouter: React.FC = () => {
             <EndingPage />
           </ProtectedRoute>
         </Route>
-        <Route path="/">
-          {/* <GameDisplay /> */}
+        <Route exact path={["/tableId/:tableId", "/"]}>
           <SplashPage />
         </Route>
       </Switch>

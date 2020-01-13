@@ -6,6 +6,7 @@ import { GameState, ProgressState, QuestionState } from "../models/GameState";
 export default class GameService extends BaseDependency {
   static id = "GameService";
 
+  isFetchingAllQuestions = false;
   gameState = ProgressState.EMPTY;
   // gameState = ProgressState.END;
   currentQuestionPos: number = 1;
@@ -16,8 +17,9 @@ export default class GameService extends BaseDependency {
   rank = 0;
   questionsMap: Map<string | number, Question> = new Map();
 
-  getAllQuestions = async () => {
-    const questions = await AjaxService.fetchAllQuestions();
+  getAllQuestions = async (withAuth = false) => {
+    this.isFetchingAllQuestions = true;
+    const questions = await AjaxService.fetchAllQuestions(withAuth);
     if (questions && questions.length > 0) {
       this.questionsMap = new Map();
       questions.forEach(q => this.questionsMap.set(q.position, q));

@@ -2,7 +2,7 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Input, Button, Typography, Box, TextField } from "@material-ui/core";
 import AjaxService from "../../services/AjaxService";
-import { useHistory, useLocation } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { useUserMedia } from "../../services/MediaService";
 import ChineseTitleCard from "../../components/ChineseTitleCard";
 import MainTitleCard from "../../components/MainTitleCard";
@@ -27,7 +27,7 @@ interface Props {}
 
 const SplashPage: React.FC<Props> = () => {
   const classes = useStyles({});
-  const location = useLocation();
+  const params = useParams<{ tableId?: string }>();
   const history = useHistory();
   const gameService = useDependency(GameService);
   console.log(gameService);
@@ -46,9 +46,9 @@ const SplashPage: React.FC<Props> = () => {
         window.alert("Table ID has already been used or does not exist!");
       }
     };
-    const queryParams = queryString.parse(location.search);
-    if (queryParams.tableId) {
-      tryLogin(queryParams.tableId.toString());
+    const tableIdFromParams = params.tableId;
+    if (tableIdFromParams) {
+      tryLogin(tableIdFromParams);
     }
 
     // Otherwise, try to find local JWT

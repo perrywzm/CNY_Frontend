@@ -28,10 +28,10 @@ const ScoreDisplay: React.FC<Props> = () => {
   const classes = useStyles({});
   const history = useHistory();
 
-  React.useEffect(() => {
-    ProjectionAjaxService.fetchQuestionResults();
-  }, []);
-  
+  // React.useEffect(() => {
+  //   ProjectionAjaxService.fetchQuestionResults();
+  // }, []);
+
   return (
     <div
       className={classes.container}
