@@ -9,6 +9,9 @@ import TitleCard from "../../components/TitleCard";
 import { COLORS } from "../../theme";
 import { useHistory } from "react-router-dom";
 import ProjectionAjaxService from "../../services/ProjectionAjaxService";
+import { useDependency } from "./../../services/DependencyInjector";
+import GameService from "./../../game/GameService";
+import { QuestionState } from "../../models/GameState";
 
 const useStyles = makeStyles({
   container: {
@@ -27,10 +30,23 @@ interface Props {}
 const ScoreDisplay: React.FC<Props> = () => {
   const classes = useStyles({});
   const history = useHistory();
+  const gameService = useDependency(GameService);
 
-  // React.useEffect(() => {
-  //   ProjectionAjaxService.fetchQuestionResults();
-  // }, []);
+  React.useEffect(() => {
+    const handleGameStateAsync = async () => {
+      await gameService.getCurrentGameState();
+
+      if (gameService.questionState === QuestionState.END) {
+        ProjectionAjaxService.fetchQuestionResults(
+          gameService.currentQuestionPos
+        )
+          .then(res => console.log("Your results are", res))
+          .catch(err => console.log(err));
+      }
+    };
+
+    handleGameStateAsync();
+  }, []);
 
   return (
     <div

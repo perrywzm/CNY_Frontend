@@ -23,6 +23,7 @@ export default class GameService extends BaseDependency {
     if (questions && questions.length > 0) {
       this.questionsMap = new Map();
       questions.forEach(q => this.questionsMap.set(q.position, q));
+      this.update();
     } else {
       console.log(questions);
     }

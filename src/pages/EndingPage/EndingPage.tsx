@@ -13,7 +13,8 @@ const useStyles = makeStyles({
     alignItems: "stretch"
   },
   title: {
-    fontSize: "40px"
+    color: COLORS.accent,
+    textAlign: "center"
   }
 });
 
@@ -25,7 +26,7 @@ const EndingPage: React.FC<Props> = () => {
     <div className={classes.container}>
       <MainTitleCard />
       <Box display="flex" flexDirection="column" padding="24px">
-        <Typography variant="h1">Thanks for playing!</Typography>
+        <Typography className={classes.title} variant="h1">Thanks for playing!</Typography>
       </Box>
       <CoinTree />
     </div>

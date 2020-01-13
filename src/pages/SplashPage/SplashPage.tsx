@@ -49,6 +49,7 @@ const SplashPage: React.FC<Props> = () => {
     const tableIdFromParams = params.tableId;
     if (tableIdFromParams) {
       tryLogin(tableIdFromParams);
+      return;
     }
 
     // Otherwise, try to find local JWT
