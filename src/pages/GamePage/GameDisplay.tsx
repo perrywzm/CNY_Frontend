@@ -25,6 +25,9 @@ interface Props {}
 const GameDisplay: React.FC<Props> = () => {
   const classes = useStyles({});
   const history = useHistory();
+
+  
+
   return (
     <div className={classes.container} onClick={() => history.push("/projection-score")}>
       <GridList style={{flex: 1, padding: 24}} cols={Math.ceil(qns.images.length / 2)}>
