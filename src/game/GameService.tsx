@@ -6,6 +6,7 @@ import { GameState, ProgressState, QuestionState } from "../models/GameState";
 export default class GameService extends BaseDependency {
   static id = "GameService";
 
+  username = " ";
   isFetchingAllQuestions = false;
   gameState = ProgressState.EMPTY;
   // gameState = ProgressState.END;
@@ -13,9 +14,14 @@ export default class GameService extends BaseDependency {
   questionState = QuestionState.START;
   currentAnswer: number;
   correctAnswer: number = null;
-  score = 0;
+  score = null;
   rank = 0;
   questionsMap: Map<string | number, Question> = new Map();
+
+  setUsername=(name: string) => {
+    this.username = name;
+    this.update();
+  }
 
   getAllQuestions = async (withAuth = false) => {
     this.isFetchingAllQuestions = true;

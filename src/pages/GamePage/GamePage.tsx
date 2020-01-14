@@ -103,7 +103,7 @@ const GamePage: React.FC = () => {
   return (
     // <div className={classes.container} onClick={() => wtf(gameService)}>
     <div className={classes.container}>
-      <TableIndicator name="Table 1" />
+      <TableIndicator />
       <ScoreDisplay score={gameService.score} />
       <Box marginTop="54px" />
       {renderOptionsContent()}

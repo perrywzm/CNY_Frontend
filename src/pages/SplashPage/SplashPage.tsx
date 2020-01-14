@@ -11,7 +11,8 @@ import { COLORS } from "../../theme";
 import { useDependency } from "./../../services/DependencyInjector";
 import GameService from "./../../game/GameService";
 import queryString from "query-string";
-import CryptoService from './../../services/CryptoService';
+import CryptoService from "./../../services/CryptoService";
+import PLACEHOLDER_CHAR from './../../common/placeholderChar';
 
 const useStyles = makeStyles({
   container: {
@@ -31,21 +32,24 @@ const SplashPage: React.FC<Props> = () => {
   const params = useParams<{ tableId?: string }>();
   const history = useHistory();
   const gameService = useDependency(GameService);
-  console.log(gameService);
+  // console.log(gameService);
 
   const [isConnecting, setConnecting] = React.useState(false);
   const [tableId, setTableId] = React.useState("");
 
-  console.log([...Array(100)].map((_, idx) => `${idx} ${CryptoService.encrypt(`Table ${idx}`)}`))
+  // console.log([...Array(100)].map((_, idx) => `${idx} ${CryptoService.encrypt(`Table ${idx}`)}`))
 
   React.useEffect(() => {
     // Check for URL params
     const tryLogin = async (encryptedTableId: string) => {
       const decryptedTableId = CryptoService.decrypt(encryptedTableId);
-      console.log(decryptedTableId);
-      const loginResult = await AjaxService.submitTableId(decryptedTableId, "login");
+      const loginResult = await AjaxService.submitTableId(
+        decryptedTableId,
+        "login"
+      );
       if (loginResult) {
         localStorage.setItem("CNYTable", JSON.stringify(AjaxService.jwtHeader));
+        gameService.setUsername(decryptedTableId);
         history.push("/lobby");
       } else {
         window.alert("Table ID has already been used or does not exist!");
@@ -68,6 +72,7 @@ const SplashPage: React.FC<Props> = () => {
       } else {
         gameService.getCurrentGameState().then(res => {
           if (res) {
+            gameService.setUsername(PLACEHOLDER_CHAR);
             history.push("/lobby");
           } else {
             localStorage.removeItem("CNYTable");
@@ -89,10 +94,12 @@ const SplashPage: React.FC<Props> = () => {
     setConnecting(false);
     if (result) {
       localStorage.setItem("CNYTable", JSON.stringify(AjaxService.jwtHeader));
+      gameService.setUsername(tableId);
       history.push("/lobby");
     } else {
       const loginResult = await AjaxService.submitTableId(tableId, "login");
       if (loginResult) {
+        gameService.setUsername(tableId);
         localStorage.setItem("CNYTable", JSON.stringify(AjaxService.jwtHeader));
         history.push("/lobby");
       }

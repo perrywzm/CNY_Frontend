@@ -67,7 +67,7 @@ const WaitingPage: React.FC = () => {
       <GameStateIndicator progressState={gameService.gameState} />
       <CoinTree />
       <HowToPlay />
-      <TableIndicator name="Table 1" />
+      <TableIndicator />
     </div>
   );
 };

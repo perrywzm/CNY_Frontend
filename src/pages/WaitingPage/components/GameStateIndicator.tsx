@@ -2,6 +2,7 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Typography } from "@material-ui/core";
 import { ProgressState } from "../../../models/GameState";
+import PLACEHOLDER_CHAR from "../../../common/placeholderChar";
 
 const useStyles = makeStyles({
   baseContainer: {
@@ -58,7 +59,5 @@ const GameStateIndicator: React.FC<Props> = props => {
       );
   }
 };
-
-const PLACEHOLDER_CHAR = " ";
 
 export default GameStateIndicator;

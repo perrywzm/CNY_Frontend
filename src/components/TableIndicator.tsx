@@ -1,6 +1,8 @@
 import React from "react";
 import { COLORS } from "../theme";
 import { makeStyles } from "@material-ui/core/styles";
+import { useDependency } from "./../services/DependencyInjector";
+import GameService from "./../game/GameService";
 
 interface StyleProps {
   hasScore?: boolean;
@@ -18,17 +20,18 @@ const useStyles = makeStyles({
 });
 
 interface Props {
-  name: string;
-  score?: number;
   onClick?: (e?: React.MouseEvent) => void;
 }
 
 const TableIndicator: React.FC<Props> = props => {
-  const classes = useStyles({hasScore: props.score !== undefined && props.score !== null});
+  const gameService = useDependency(GameService);
+  const classes = useStyles({
+    hasScore: gameService.score !== undefined && gameService.score !== null
+  });
+
   return (
     <div onClick={props.onClick} className={classes.container}>
-      {props.name}
-      <div style={{ float: "left" }}>{props.score}</div>
+      {gameService.username}
     </div>
   );
 };
