@@ -126,7 +126,7 @@ const SplashPage: React.FC<Props> = () => {
         if (loginResult === 1) {
           window.alert("This Table ID is currently logged in!");
         } else {
-          gameService.setUsername(decryptedTableId);
+          gameService.setUsername(prefixedTableId);
           localStorage.setItem(
             "CNYTable",
             JSON.stringify(AjaxService.jwtHeader)
