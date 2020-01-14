@@ -15,7 +15,7 @@ const useStyles = makeStyles({
     color: COLORS.accent,
     position: "fixed",
     background: "#890504",
-    textAlign: (props: StyleProps) => (props.hasScore ? "left" : "right")
+    textAlign: "right"
   }
 });
 
