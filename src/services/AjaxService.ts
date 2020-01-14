@@ -34,20 +34,24 @@ export default class AjaxService {
           AjaxService.jwtHeader = {
             Authorization: `Bearer ${result.data.token}`
           };
-          return true;
+          return 2;
         } else {
-          return false;
+          return 0;
         }
       } catch (e) {
         console.log(e);
-        if (
-          e.response &&
-          e.response.data.error === "There is an existing username"
-        ) {
-          return false;
+        if (e.response) {
+          switch (e.response.data.error) {
+            case "There is an existing username":
+              return 0;
+            case "The user have login":
+              return 1;
+            default:
+              return 0;
+          }
         } else {
           console.error("Error encountered when submitting table ID!", e);
-          return false; //true;
+          return 0; //true;
         }
       }
     }

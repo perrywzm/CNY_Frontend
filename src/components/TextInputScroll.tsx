@@ -48,6 +48,7 @@ const TextInputScroll: React.FC<Props> = props => {
       <img className={classes.left} src={ScrollLeftImg} />
       <div className={classes.body}>
         <TextField
+          type="number"
           placeholder={props.placeholder}
           onChange={props.onChange}
           fullWidth

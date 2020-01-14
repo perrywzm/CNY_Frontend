@@ -12,7 +12,7 @@ import { useDependency } from "./../../services/DependencyInjector";
 import GameService from "./../../game/GameService";
 import queryString from "query-string";
 import CryptoService from "./../../services/CryptoService";
-import PLACEHOLDER_CHAR from './../../common/placeholderChar';
+import PLACEHOLDER_CHAR from "./../../common/placeholderChar";
 
 const useStyles = makeStyles({
   container: {
@@ -37,24 +37,43 @@ const SplashPage: React.FC<Props> = () => {
   const [isConnecting, setConnecting] = React.useState(false);
   const [tableId, setTableId] = React.useState("");
 
-  console.log([...Array(100)].map((_, idx) => `${idx} ${CryptoService.encrypt(`Table ${idx}`)}`))
+  // console.log([...Array(100)].map((_, idx) => `${idx} ${CryptoService.encrypt(`Table ${idx}`)}`))
 
   React.useEffect(() => {
     // Check for URL params
     const tryLogin = async (encryptedTableId: string) => {
       const decryptedTableId = CryptoService.decrypt(encryptedTableId);
-      const loginResult = await AjaxService.submitTableId(
+      const result = await AjaxService.submitTableId(
         decryptedTableId,
-        "login"
+        "create"
       );
-      if (loginResult) {
+      if (result) {
         localStorage.setItem("CNYTable", JSON.stringify(AjaxService.jwtHeader));
         gameService.setUsername(decryptedTableId);
         history.push("/lobby");
       } else {
-        window.alert("Table ID has already been used or does not exist!");
+        const loginResult = await AjaxService.submitTableId(
+          decryptedTableId,
+          "login"
+        );
+        if (loginResult) {
+          // Existing logged in user error
+          if (loginResult === 1) {
+            window.alert("This Table ID is currently logged in!");
+          } else {
+            gameService.setUsername(decryptedTableId);
+            localStorage.setItem(
+              "CNYTable",
+              JSON.stringify(AjaxService.jwtHeader)
+            );
+            history.push("/lobby");
+          }
+        } else {
+          window.alert("Table ID has already been used or does not exist!");
+        }
       }
     };
+
     const tableIdFromParams = params.tableId;
     if (tableIdFromParams) {
       tryLogin(tableIdFromParams);
@@ -90,16 +109,20 @@ const SplashPage: React.FC<Props> = () => {
   const handleSubmit = async () => {
     if (isConnecting) return;
     setConnecting(true);
-    const result = await AjaxService.submitTableId(tableId, "create");
+    const prefixedTableId = `Table ${tableId}`;
+    const result = await AjaxService.submitTableId(prefixedTableId, "create");
     setConnecting(false);
     if (result) {
       localStorage.setItem("CNYTable", JSON.stringify(AjaxService.jwtHeader));
-      gameService.setUsername(tableId);
+      gameService.setUsername(prefixedTableId);
       history.push("/lobby");
     } else {
-      const loginResult = await AjaxService.submitTableId(tableId, "login");
+      const loginResult = await AjaxService.submitTableId(
+        prefixedTableId,
+        "login"
+      );
       if (loginResult) {
-        gameService.setUsername(tableId);
+        gameService.setUsername(prefixedTableId);
         localStorage.setItem("CNYTable", JSON.stringify(AjaxService.jwtHeader));
         history.push("/lobby");
       }
