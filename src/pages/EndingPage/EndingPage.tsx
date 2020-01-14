@@ -4,6 +4,7 @@ import { makeStyles } from "@material-ui/styles";
 import { Box, Button, Typography } from "@material-ui/core";
 import { COLORS } from "../../theme";
 import CoinTree from "../../components/CoinTree";
+import GameStateRedirector from "../GameStateRedirector";
 
 const useStyles = makeStyles({
   container: {
@@ -22,11 +23,15 @@ interface Props {}
 
 const EndingPage: React.FC<Props> = () => {
   const classes = useStyles({});
+
   return (
     <div className={classes.container}>
+      <GameStateRedirector />
       <MainTitleCard />
       <Box display="flex" flexDirection="column" padding="24px">
-        <Typography className={classes.title} variant="h1">Thanks for playing!</Typography>
+        <Typography className={classes.title} variant="h1">
+          Thanks for playing!
+        </Typography>
       </Box>
       <CoinTree />
     </div>

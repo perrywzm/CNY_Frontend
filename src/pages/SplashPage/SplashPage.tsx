@@ -11,6 +11,7 @@ import { COLORS } from "../../theme";
 import { useDependency } from "./../../services/DependencyInjector";
 import GameService from "./../../game/GameService";
 import queryString from "query-string";
+import CryptoService from './../../services/CryptoService';
 
 const useStyles = makeStyles({
   container: {
@@ -35,10 +36,14 @@ const SplashPage: React.FC<Props> = () => {
   const [isConnecting, setConnecting] = React.useState(false);
   const [tableId, setTableId] = React.useState("");
 
+  console.log([...Array(100)].map((_, idx) => `${idx} ${CryptoService.encrypt(`Table ${idx}`)}`))
+
   React.useEffect(() => {
     // Check for URL params
-    const tryLogin = async (tableId: string) => {
-      const loginResult = await AjaxService.submitTableId(tableId, "login");
+    const tryLogin = async (encryptedTableId: string) => {
+      const decryptedTableId = CryptoService.decrypt(encryptedTableId);
+      console.log(decryptedTableId);
+      const loginResult = await AjaxService.submitTableId(decryptedTableId, "login");
       if (loginResult) {
         localStorage.setItem("CNYTable", JSON.stringify(AjaxService.jwtHeader));
         history.push("/lobby");
@@ -58,7 +63,7 @@ const SplashPage: React.FC<Props> = () => {
     if (jwtToken) {
       AjaxService.jwtHeader = JSON.parse(jwtToken);
 
-      if (!AjaxService.jwtHeader.authorization) {
+      if (!AjaxService.jwtHeader.Authorization) {
         localStorage.removeItem("CNYTable");
       } else {
         gameService.getCurrentGameState().then(res => {

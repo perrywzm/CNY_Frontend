@@ -9,6 +9,7 @@ export abstract class BaseDependency {
   static id: string;
   update: () => void;
   dispose: () => {};
+  getDependency: <T extends BaseDependency>(dependency: new () => T) => T;
 }
 
 interface DependencyState {
@@ -45,6 +46,10 @@ export default class DependencyProvider extends React.Component<
   componentWillUnmount() {
     this.state.dependencies.forEach(dep => dep.dispose());
   }
+
+  getDependency = <T extends BaseDependency>(dependency: new () => T) => {
+    return this.state.dependencies[(dependency as any).id];
+  };
 
   update = () => {
     // Force a re-render in all dependents, by manually informing them of a state change

@@ -2,6 +2,7 @@ import SockJS from "sockjs-client";
 import { Client, Frame } from "@stomp/stompjs";
 import { BaseDependency } from "./DependencyInjector";
 import { GameState } from "../models/GameState";
+import AjaxService from "./AjaxService";
 
 // const ENDPOINT = "http://192.168.137.1:8090";
 const ENDPOINT = "https://cnybackend.southeastasia.cloudapp.azure.com/game";
@@ -10,14 +11,16 @@ export default class SocketService extends BaseDependency {
   static id = "SocketService";
   socket: WebSocket;
   stompClient: Client;
+  disconnectFlag: boolean;
+  onErrorRestore: (error?: any) => void;
 
-  activate(msgCallback: (msg) => void) {
+  activate(msgCallback: (msg) => void, onErrorRestore: (error?) => void) {
+    this.onErrorRestore = onErrorRestore;
+
     const stompConfig = {
       // Typically login, passcode and vhost
       // Adjust these for your broker
-      connectHeaders: {
-        jwt: "bearer ghghghki.hkikh.gues435454543t"
-      },
+      connectHeaders: AjaxService.jwtHeader,
 
       // Broker URL, should start with ws:// or wss:// - adjust for your broker setup
       // brokerURL: "ws://cny-game.herokuapp.com/game",
@@ -39,11 +42,19 @@ export default class SocketService extends BaseDependency {
         const payload = JSON.parse(msg.body) as GameState;
 
         console.log(payload);
+        if (this.disconnectFlag) {
+          this.onErrorRestore();
+        }
         msgCallback(payload);
       });
     };
     this.stompClient.activate();
   }
+
+  onError = (event: any) => {
+    this.disconnectFlag = true;
+    this.onErrorRestore();
+  };
 
   deactivate() {
     if (this.stompClient && this.stompClient.active) {

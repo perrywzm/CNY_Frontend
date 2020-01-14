@@ -7,7 +7,7 @@ const BASE_BASE_HREF = "https://cnybackend.southeastasia.cloudapp.azure.com";
 const BASE_HREF = "https://cnybackend.southeastasia.cloudapp.azure.com/api";
 
 export default class AjaxService {
-  static jwtHeader: { authorization?: string } = {};
+  static jwtHeader: { Authorization?: string } = {};
 
   static submitTableId = async (
     tableId: string,
@@ -32,7 +32,7 @@ export default class AjaxService {
         console.log("Result came in!", result);
         if (result.status === 200) {
           AjaxService.jwtHeader = {
-            authorization: `Bearer ${result.data.token}`
+            Authorization: `Bearer ${result.data.token}`
           };
           return true;
         } else {
@@ -121,6 +121,23 @@ export default class AjaxService {
       }
     } catch (e) {
       console.error("Error encountered when submitting answer!", e);
+      return null;
+    }
+  };
+
+  static fetchQuestionAnswer = async (qnPos: number) => {
+    try {
+      const result = await axios.get(BASE_HREF + `/user/response`, {
+        headers: AjaxService.jwtHeader
+      });
+      console.log(result);
+      if (result.status === 200) {
+        return result.data.find(qn => qn.question === qnPos).choice;
+      } else {
+        return null;
+      }
+    } catch (e) {
+      console.error("Error encountered when fetching question!", e);
       return null;
     }
   };

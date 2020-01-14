@@ -18,6 +18,7 @@ import MainTitleCard from "../../components/MainTitleCard";
 import CoinTree from "../../components/CoinTree";
 import { useDependency } from "./../../services/DependencyInjector";
 import GameService from "./../../game/GameService";
+import GameStateRedirector from "../GameStateRedirector";
 
 const useStyles = makeStyles({
   container: {
@@ -45,22 +46,28 @@ const WaitingPage: React.FC = () => {
   const gameService = useDependency(GameService);
 
   React.useEffect(() => {
+    // Initial setup for entering game
     const preloadQuestions = async () => {
       gameService.getAllQuestions();
       gameService.preloadQuestion(1);
     };
 
-    socketService.activate(gameService.handleEvent);
+    const attemptGameStateRestore = () => {
+      gameService.getCurrentGameState();
+    };
+
+    socketService.activate(gameService.handleEvent, attemptGameStateRestore);
     preloadQuestions();
   }, []);
   return (
     <div className={classes.container}>
       <Box marginTop="54px" />
       <MainTitleCard />
+      <GameStateRedirector />
       <GameStateIndicator progressState={gameService.gameState} />
       <CoinTree />
       <HowToPlay />
-      <TableIndicator name="Table 1" onClick={() => history.push("/game")} />
+      <TableIndicator name="Table 1" />
     </div>
   );
 };

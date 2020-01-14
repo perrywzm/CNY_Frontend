@@ -1,8 +1,7 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { CircularProgress, Typography, Box } from "@material-ui/core";
+import { Typography } from "@material-ui/core";
 import { ProgressState } from "../../../models/GameState";
-import { Redirect } from "react-router";
 
 const useStyles = makeStyles({
   baseContainer: {
@@ -47,9 +46,7 @@ const GameStateIndicator: React.FC<Props> = props => {
           </Typography>
         </div>
       );
-    case ProgressState.END:
     case ProgressState.PLAYING:
-      return <Redirect to="/game" />;
     case ProgressState.EMPTY:
     default:
       return (

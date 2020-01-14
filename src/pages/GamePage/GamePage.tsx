@@ -34,6 +34,17 @@ const GamePage: React.FC = () => {
   const [selected, setSelected] = React.useState<number>(null);
 
   React.useEffect(() => {
+    // Attempt to restore previously selected answer
+    AjaxService.fetchQuestionAnswer(gameService.currentQuestionPos).then(
+      ans => {
+        console.log(ans)
+        gameService.currentAnswer = ans
+        gameService.update();
+      }
+    );
+  }, []);
+
+  React.useEffect(() => {
     if (
       gameService.currentAnswer !== null &&
       gameService.currentAnswer !== undefined
