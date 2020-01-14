@@ -37,7 +37,7 @@ const SplashPage: React.FC<Props> = () => {
   const [isConnecting, setConnecting] = React.useState(false);
   const [tableId, setTableId] = React.useState("");
 
-  // console.log([...Array(100)].map((_, idx) => `${idx} ${CryptoService.encrypt(`Table ${idx}`)}`))
+  console.log([...Array(100)].map((_, idx) => `${idx} ${CryptoService.encrypt(`Table ${idx}`)}`))
 
   React.useEffect(() => {
     // Check for URL params
