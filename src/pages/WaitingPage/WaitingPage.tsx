@@ -57,6 +57,7 @@ const WaitingPage: React.FC = () => {
     };
 
     socketService.activate(gameService.handleEvent, attemptGameStateRestore);
+    gameService.getCurrentGameState();
     preloadQuestions();
   }, []);
   return (
