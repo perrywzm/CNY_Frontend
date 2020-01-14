@@ -122,11 +122,20 @@ const SplashPage: React.FC<Props> = () => {
         "login"
       );
       if (loginResult) {
-        gameService.setUsername(prefixedTableId);
-        localStorage.setItem("CNYTable", JSON.stringify(AjaxService.jwtHeader));
-        history.push("/lobby");
+        // Existing logged in user error
+        if (loginResult === 1) {
+          window.alert("This Table ID is currently logged in!");
+        } else {
+          gameService.setUsername(decryptedTableId);
+          localStorage.setItem(
+            "CNYTable",
+            JSON.stringify(AjaxService.jwtHeader)
+          );
+          history.push("/lobby");
+        }
+      } else {
+        window.alert("Table ID has already been used or does not exist!");
       }
-      window.alert("Table ID has already been used or does not exist!");
     }
   };
 
