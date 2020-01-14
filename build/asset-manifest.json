@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/static/css/main.0635fd53.chunk.css",
-    "main.js": "/static/js/main.478b2556.chunk.js",
+    "main.js": "/static/js/main.948d1248.chunk.js",
     "runtime-main.js": "/static/js/runtime-main.be10cdb7.js",
-    "static/js/2.1b325a08.chunk.js": "/static/js/2.1b325a08.chunk.js",
+    "static/js/2.423cd406.chunk.js": "/static/js/2.423cd406.chunk.js",
     "index.html": "/index.html",
-    "precache-manifest.9030da2ed7394aae34e6b3a5304f739f.js": "/precache-manifest.9030da2ed7394aae34e6b3a5304f739f.js",
+    "precache-manifest.32b009390c4f977b33d41ba51527e7f6.js": "/precache-manifest.32b009390c4f977b33d41ba51527e7f6.js",
     "service-worker.js": "/service-worker.js",
-    "static/js/2.1b325a08.chunk.js.LICENSE": "/static/js/2.1b325a08.chunk.js.LICENSE",
+    "static/js/2.423cd406.chunk.js.LICENSE": "/static/js/2.423cd406.chunk.js.LICENSE",
     "static/media/index.css": "/static/media/bg.e2b23dc7.png",
     "static/media/CoinTree.css": "/static/media/cherryblossom.701fe22b.png",
     "static/media/cntxt.svg": "/static/media/cntxt.4ca3826e.svg",
@@ -18,8 +18,8 @@
   },
   "entrypoints": [
     "static/js/runtime-main.be10cdb7.js",
-    "static/js/2.1b325a08.chunk.js",
+    "static/js/2.423cd406.chunk.js",
     "static/css/main.0635fd53.chunk.css",
-    "static/js/main.478b2556.chunk.js"
+    "static/js/main.948d1248.chunk.js"
   ]
 }
