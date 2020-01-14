@@ -1,5 +1,5 @@
 import React from "react";
-import { Modal, Typography, makeStyles } from "@material-ui/core";
+import { Modal, Typography, makeStyles, Box } from "@material-ui/core";
 import HOW_TO_PLAY from "./howToPlayText";
 
 const useStyles = makeStyles({
@@ -22,7 +22,13 @@ const HowToPlayDisplay: React.FC<Props> = props => {
       open={props.show}
       onClick={e => e.preventDefault()}
     >
-      <Typography className={classes.text}>{HOW_TO_PLAY}</Typography>
+      <Box padding="32px">
+        <Typography style={{ textAlign: "center" }} variant="h1">
+          HOW TO PLAY
+        </Typography>
+        <br />
+        <Typography className={classes.text}>{HOW_TO_PLAY}</Typography>
+      </Box>
     </Modal>
   );
 };
