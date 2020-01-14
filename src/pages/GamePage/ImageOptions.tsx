@@ -29,10 +29,7 @@ const ImageOptions: React.FC<Props> = props => {
           return (
             <GridListTile
               classes={{ tile: classes.tile }}
-              onClick={() => {
-                console.log(234343434);
-                props.onSelect(image.id);
-              }}
+              onClick={() => props.onSelect(image.id)}
             >
               <PureImage url={image.url} />
               <ImageTitle>{image.title}</ImageTitle>
