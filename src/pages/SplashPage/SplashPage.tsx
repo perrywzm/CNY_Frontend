@@ -107,7 +107,10 @@ const SplashPage: React.FC<Props> = () => {
   };
 
   const handleSubmit = async () => {
-    if (isConnecting) return;
+    if (isConnecting || tableId === "") {
+      window.alert("Please enter a valid table ID");
+      return;
+    }
     setConnecting(true);
     const prefixedTableId = `Table ${tableId}`;
     const result = await AjaxService.submitTableId(prefixedTableId, "create");

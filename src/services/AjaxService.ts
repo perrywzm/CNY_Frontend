@@ -179,4 +179,20 @@ export default class AjaxService {
       return null;
     }
   };
+
+  static fetchImageAsBase64 = async (url: string) => {
+    try {
+      url = url.replace("http://", "https://");
+      const result = await axios.get(url, { responseType: "arraybuffer" });
+      if (result.status === 200) {
+        const b64img = Buffer.from(result.data, "binary").toString("base64");
+        return `data:image/jpg;base64, ${b64img}`;
+      } else {
+        return null;
+      }
+    } catch (e) {
+      console.error("Error encountered when fetching image!", e);
+      return null;
+    }
+  };
 }

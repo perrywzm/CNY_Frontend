@@ -12,6 +12,7 @@ import Ranking from "./Ranking";
 import { QuestionState, ProgressState } from "../../models/GameState";
 import ScoreDisplay from "./ScoreDisplay";
 import { Redirect } from "react-router-dom";
+import Question from "../../models/Question";
 
 const useStyles = makeStyles({
   container: {
@@ -31,14 +32,19 @@ const useStyles = makeStyles({
 const GamePage: React.FC = () => {
   const classes = useStyles({});
   const gameService = useDependency(GameService);
+  const [cachedCurrentQn, setCachedCurrentQn] = React.useState<Question>(null)
   const [selected, setSelected] = React.useState<number>(null);
+  const [shouldImageRerender, setShouldImageRerender] = React.useState(true);
 
   React.useEffect(() => {
+    if (gameService.getCurrentQuestion()) {
+      setCachedCurrentQn(gameService.getCurrentQuestion());
+    }
     // Attempt to restore previously selected answer
     AjaxService.fetchQuestionAnswer(gameService.currentQuestionPos).then(
       ans => {
-        console.log(ans)
-        gameService.currentAnswer = ans
+        console.log(ans);
+        gameService.currentAnswer = ans;
         gameService.update();
       }
     );
@@ -53,23 +59,32 @@ const GamePage: React.FC = () => {
     }
   }, [gameService.currentAnswer]);
 
-  const currentQn = gameService.getCurrentQuestion();
+  React.useEffect(() => {
+    setShouldImageRerender(true);
+    // Delay state change for animation
+    setTimeout(() => {
+      setShouldImageRerender(false);
+      setCachedCurrentQn(gameService.getCurrentQuestion())
+    }, 400);
+  }, [gameService.currentQuestionPos]);
+
+  // const cachedCurrentQn = gameService.getCurrentQuestion();
 
   const selectOption = (option: number) => {
     setSelected(option);
     gameService.currentAnswer = null;
-    AjaxService.submitAnswer(currentQn.position, option).then(res => {
+    AjaxService.submitAnswer(cachedCurrentQn.position, option).then(res => {
       gameService.handleSubmitResponse(res);
     });
   };
 
   const renderOptionsContent = () => {
-    if (currentQn) {
+    if (cachedCurrentQn) {
       return (
         <>
           <TitleCard>
             <Typography variant="h1" className={classes.title}>
-              {currentQn.title}
+              {cachedCurrentQn.title}
             </Typography>
           </TitleCard>
           <Box
@@ -79,7 +94,8 @@ const GamePage: React.FC = () => {
             padding="24px"
           >
             <ImageOptions
-              question={currentQn}
+              isAnimated={shouldImageRerender}
+              question={cachedCurrentQn}
               selected={selected}
               isConfirmedSelection={selected === gameService.currentAnswer}
               onSelect={selectOption}
@@ -114,19 +130,6 @@ const GamePage: React.FC = () => {
       {renderEndgameRedirector()}
     </div>
   );
-};
-
-const wtf = (gameService: GameService) => {
-  // AjaxService.fetchQuestionResults(gameService.currentQuestionPos).then(res => {
-  //   console.log("Placeholder fetch question results", res);
-  //   gameService.rank++;
-  //   gameService.update();
-  // });
-  // gameService.questionState =
-  //   gameService.questionState === QuestionState.END
-  //     ? QuestionState.START
-  //     : QuestionState.END;
-  // gameService.update();
 };
 
 export default GamePage;

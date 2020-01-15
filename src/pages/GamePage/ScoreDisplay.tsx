@@ -1,6 +1,7 @@
 import React from "react";
 import LanternImg from "../../assets/lantern.png";
 import { makeStyles } from "@material-ui/core";
+import { COLORS } from "../../theme";
 
 const useStyles = makeStyles({
   container: {
@@ -13,7 +14,9 @@ const useStyles = makeStyles({
     textAlign: "center",
     fontSize: "1em",
     lineHeight: "1.2em",
-    overflow: "visible"
+    overflow: "visible",
+    textShadow: "0 0 12px #000, 0 0 12px #000",
+    color: "#d3fc85",
   }
 });
 

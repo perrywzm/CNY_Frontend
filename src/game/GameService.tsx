@@ -86,11 +86,19 @@ export default class GameService extends BaseDependency {
         this.score = score;
         this.update();
       }
+    }
+  };
 
-      const qnAns = await AjaxService.fetchQuestionResults(this.currentQuestionPos);
-      if (qnAns) {
-        
-      }
+  preloadImages = () => {
+    // Good ol' pyramid of doom
+    if (this.questionsMap.size > 0) {
+      this.questionsMap.forEach(qn => {
+        qn.images.forEach((img, idx) => {
+          AjaxService.fetchImageAsBase64(img.url).then(
+            base64img => (qn.images[idx].url = base64img)
+          );
+        });
+      });
     }
   };
 

@@ -48,8 +48,9 @@ const WaitingPage: React.FC = () => {
   React.useEffect(() => {
     // Initial setup for entering game
     const preloadQuestions = async () => {
-      gameService.getAllQuestions();
-      gameService.preloadQuestion(1);
+      gameService.getAllQuestions().then(() => {
+        gameService.preloadImages();
+      });
     };
 
     const attemptGameStateRestore = () => {
