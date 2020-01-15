@@ -13,6 +13,7 @@ const useStyles = makeStyles({
     height: "100%",
     top: (props: Props) => (props.show ? 0 : "-100%"),
     transition: "top 0.3s ease-out",
+    transitionDelay: "1s", 
     overflow: "hidden",
     userSelect: "none",
     "&:focus": {
@@ -27,7 +28,7 @@ const useStyles = makeStyles({
   overlay: {
     opacity: (props: Props) => (props.show ? 0.5 : 0),
     display: (props: Props) => (props.show ? "block" : "none"),
-    transition: "opacity 0.3s, display 0.3s"
+    transition: "opacity 0.75s, display 0.75s"
   },
   textContainer: {
     color: COLORS.accent,
