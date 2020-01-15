@@ -8,6 +8,11 @@ const useStyles = makeStyles({
     "& :focus": {
       outline: "none"
     }
+  },
+  text: {
+    textShadow: "0 0 8px #000, 0 0 8px #000, 0 0 8px #000",
+    color: "#d3fc85",
+    textAlign: "center"
   }
 });
 
@@ -22,11 +27,11 @@ const HowToPlayDisplay: React.FC<Props> = props => {
   return (
     <Modal onClose={props.onClose} open={props.show}>
       <Box className={classes.defocus} padding="32px" onClick={props.onClose}>
-        <Typography style={{ textAlign: "center" }} variant="h1">
+        <Typography className={classes.text} variant="h1">
           HOW TO PLAY
         </Typography>
         <br />
-        <Typography>{HOW_TO_PLAY}</Typography>
+        <Typography className={classes.text}>{HOW_TO_PLAY}</Typography>
       </Box>
     </Modal>
   );

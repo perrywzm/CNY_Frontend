@@ -1,16 +1,16 @@
 {
   "files": {
     "main.css": "/static/css/main.0635fd53.chunk.css",
-    "main.js": "/static/js/main.42139b30.chunk.js",
+    "main.js": "/static/js/main.3f8997af.chunk.js",
     "runtime-main.js": "/static/js/runtime-main.be10cdb7.js",
     "static/js/2.1b325a08.chunk.js": "/static/js/2.1b325a08.chunk.js",
     "index.html": "/index.html",
-    "precache-manifest.4cb5f1b856408e5036a0898df53bef9d.js": "/precache-manifest.4cb5f1b856408e5036a0898df53bef9d.js",
+    "precache-manifest.224c75ef49d24ee0dda359eb3ba05522.js": "/precache-manifest.224c75ef49d24ee0dda359eb3ba05522.js",
     "service-worker.js": "/service-worker.js",
     "static/js/2.1b325a08.chunk.js.LICENSE": "/static/js/2.1b325a08.chunk.js.LICENSE",
     "static/media/index.css": "/static/media/bg.e2b23dc7.png",
     "static/media/CoinTree.css": "/static/media/cherryblossom.701fe22b.png",
-    "static/media/cntxt.svg": "/static/media/cntxt.4ca3826e.svg",
+    "static/media/cntxt.svg": "/static/media/cntxt.2b7d2dc6.svg",
     "static/media/lantern.png": "/static/media/lantern.ec9762cb.png",
     "static/media/scroll.png": "/static/media/scroll.ab5e83c1.png",
     "static/media/scrollleft.png": "/static/media/scrollleft.e66eb0a9.png",
@@ -20,6 +20,6 @@
     "static/js/runtime-main.be10cdb7.js",
     "static/js/2.1b325a08.chunk.js",
     "static/css/main.0635fd53.chunk.css",
-    "static/js/main.42139b30.chunk.js"
+    "static/js/main.3f8997af.chunk.js"
   ]
 }

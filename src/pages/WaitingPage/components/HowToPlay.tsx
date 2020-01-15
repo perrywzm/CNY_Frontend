@@ -7,12 +7,13 @@ const useStyles = makeStyles({
   textContainer: {
     // position: "fixed",
     // bottom: 0,
-    margin: "32px",
+    margin: "auto",
+    marginTop: "32px",
     padding: "12px 24px",
     // padding: "0 20px 40px 20px",
     // lineHeight: "1.8em",
     color: COLORS.accent,
-    // width: "%",
+    width: "60%",
     backgroundColor: "rgba(0,0,0,0.3)",
     textAlign: "center",
     borderRadius: 9999
