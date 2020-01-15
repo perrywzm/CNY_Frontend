@@ -7,7 +7,6 @@ const useStyles = makeStyles({
   textContainer: {
     // position: "fixed",
     // bottom: 0,
-    display: "inline",
     margin: "32px",
     padding: "12px 24px",
     // padding: "0 20px 40px 20px",
@@ -35,4 +34,4 @@ const HowToPlay: React.FC<Props> = () => {
   );
 };
 
-exp
+export default HowToPlay;

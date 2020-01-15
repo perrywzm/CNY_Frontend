@@ -5,15 +5,18 @@ import { COLORS } from "./../../theme";
 import ModalOverlay from "../../components/ModalOverlay";
 
 const useStyles = makeStyles({
+  modal: {
+    opacity: (props: Props) => (props.show ? 1 : 0),
+    transition: "opacity 0.75s"
+  },
   container: {
     position: "fixed",
     display: "flex",
     width: "100%",
     justifyContent: "center",
     height: "100%",
-    top: (props: Props) => (props.show ? 0 : "-100%"),
-    transition: "top 0.3s ease-out",
-    transitionDelay: "1s", 
+    top: (props: Props) => (props.show ? 0 : "-100vh"),
+    transition: "top 0.6s ease-out 1s",
     overflow: "hidden",
     userSelect: "none",
     "&:focus": {
@@ -24,11 +27,6 @@ const useStyles = makeStyles({
     display: "block",
     position: "absolute",
     height: "auto"
-  },
-  overlay: {
-    opacity: (props: Props) => (props.show ? 0.5 : 0),
-    display: (props: Props) => (props.show ? "block" : "none"),
-    transition: "opacity 0.75s, display 0.75s"
   },
   textContainer: {
     color: COLORS.accent,
@@ -50,7 +48,7 @@ const Ranking: React.FC<Props> = props => {
   const classes = useStyles(props);
   return (
     <>
-      <Modal keepMounted open={props.show}>
+      <Modal className={classes.modal} keepMounted open={props.show}>
         <div className={classes.container}>
           {/* <ModalOverlay className={classes.overlay} /> */}
           <img className={classes.lantern} src={LanternImg} />
