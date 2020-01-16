@@ -113,33 +113,52 @@ const SplashPage: React.FC<Props> = () => {
     }
     setConnecting(true);
     const prefixedTableId = `Table ${tableId}`;
-    const result = await AjaxService.submitTableId(prefixedTableId, "create");
+    const loginResult = await AjaxService.submitTableId(
+      prefixedTableId,
+      "login"
+    );
     setConnecting(false);
-    if (result) {
-      localStorage.setItem("CNYTable", JSON.stringify(AjaxService.jwtHeader));
-      gameService.setUsername(prefixedTableId);
-      history.push("/lobby");
-    } else {
-      const loginResult = await AjaxService.submitTableId(
-        prefixedTableId,
-        "login"
-      );
-      if (loginResult) {
-        // Existing logged in user error
-        if (loginResult === 1) {
-          window.alert("This Table ID is currently logged in!");
-        } else {
-          gameService.setUsername(prefixedTableId);
-          localStorage.setItem(
-            "CNYTable",
-            JSON.stringify(AjaxService.jwtHeader)
-          );
-          history.push("/lobby");
-        }
+    if (loginResult) {
+      // Existing logged in user error
+      if (loginResult === 1) {
+        window.alert("This Table ID is currently logged in!");
       } else {
-        window.alert("Table ID has already been used or does not exist!");
+        gameService.setUsername(prefixedTableId);
+        localStorage.setItem("CNYTable", JSON.stringify(AjaxService.jwtHeader));
+        history.push("/lobby");
       }
+    } else {
+      window.alert("Table ID has already been used or does not exist!");
     }
+
+    // const prefixedTableId = `Table ${tableId}`;
+    // const result = await AjaxService.submitTableId(prefixedTableId, "create");
+    // setConnecting(false);
+    // if (result) {
+    //   localStorage.setItem("CNYTable", JSON.stringify(AjaxService.jwtHeader));
+    //   gameService.setUsername(prefixedTableId);
+    //   history.push("/lobby");
+    // } else {
+    //   const loginResult = await AjaxService.submitTableId(
+    //     prefixedTableId,
+    //     "login"
+    //   );
+    //   if (loginResult) {
+    //     // Existing logged in user error
+    //     if (loginResult === 1) {
+    //       window.alert("This Table ID is currently logged in!");
+    //     } else {
+    //       gameService.setUsername(prefixedTableId);
+    //       localStorage.setItem(
+    //         "CNYTable",
+    //         JSON.stringify(AjaxService.jwtHeader)
+    //       );
+    //       history.push("/lobby");
+    //     }
+    //   } else {
+    //     window.alert("Table ID has already been used or does not exist!");
+    //   }
+    // }
   };
 
   return (

@@ -92,7 +92,7 @@ const ImageOptions: React.FC<Props> = props => {
 };
 
 const _PureImage: React.FC<{ url: string }> = props => {
-  console.log("Rerendered image");
+  // console.log("Rerendered image");
   return (
     <img
       src={props.url}

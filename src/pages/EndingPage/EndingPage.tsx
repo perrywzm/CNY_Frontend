@@ -7,6 +7,7 @@ import CoinTree from "../../components/CoinTree";
 import GameStateRedirector from "../GameStateRedirector";
 import { useDependency } from "./../../services/DependencyInjector";
 import GameService from "./../../game/GameService";
+import CoinTreeGame from "../WaitingPage/components/CoinTreeGame";
 
 const useStyles = makeStyles({
   container: {
@@ -24,6 +25,9 @@ const useStyles = makeStyles({
     color: "#d3fc85",
     textAlign: "center",
     textShadow: `0 0 16px ${COLORS.accent},0 0 16px ${COLORS.accent}`
+  },
+  cointreePositioner: {
+    position: "relative"
   }
 });
 
@@ -56,7 +60,10 @@ const EndingPage: React.FC<Props> = () => {
           Thanks for playing!
         </Typography>
       </Box>
-      <CoinTree />
+      <div className={classes.cointreePositioner}>
+        <CoinTree />
+        <CoinTreeGame />
+      </div>
     </div>
   );
 };

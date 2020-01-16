@@ -10,7 +10,7 @@ export default class ProjectionAjaxService {
     try {
       const result = await axios.get(BASE_HREF + `/poll/${qnPos}`);
       if (result.status === 200) {
-        console.log("Getting question results", result.data);
+        // console.log("Getting question results", result.data);
         return result.data;
       } else {
         return null;
@@ -25,7 +25,7 @@ export default class ProjectionAjaxService {
     try {
       const result = await axios.get(BASE_HREF + `/game/state`);
       if (result.status === 200) {
-        console.log("Getting current game state", result.data);
+        // console.log("Getting current game state", result.data);
         return result.data as GameState;
       } else {
         return null;

@@ -17,6 +17,7 @@ const useStyles = makeStyles({
     overflow: "visible",
     textShadow: "0 0 12px #000, 0 0 12px #000",
     color: "#d3fc85",
+    zIndex: 1002
   }
 });
 

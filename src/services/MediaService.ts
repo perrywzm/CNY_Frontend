@@ -7,10 +7,10 @@ export function useUserMedia(requestedMedia) {
     async function enableStream() {
       try {
         const stream = await navigator.mediaDevices.getUserMedia(requestedMedia);
-        console.log(stream)
+        // console.log(stream)
         setMediaStream(stream);
       } catch(err) {
-        console.log(err)
+        // console.log(err)
         // Removed for brevity
       }
     }

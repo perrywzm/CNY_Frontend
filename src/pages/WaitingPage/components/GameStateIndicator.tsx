@@ -37,7 +37,7 @@ interface Props {
 const GameStateIndicator: React.FC<Props> = props => {
   const classes = useStyles({});
 
-  console.log(props);
+  // console.log(props);
   switch (props.progressState) {
     case ProgressState.WAITING:
       return (

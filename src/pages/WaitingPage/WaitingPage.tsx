@@ -19,13 +19,15 @@ import CoinTree from "../../components/CoinTree";
 import { useDependency } from "./../../services/DependencyInjector";
 import GameService from "./../../game/GameService";
 import GameStateRedirector from "../GameStateRedirector";
+import CoinTreeGame from "./components/CoinTreeGame";
 
 const useStyles = makeStyles({
   container: {
     display: "flex",
     flexFlow: "column",
     height: "100%",
-    alignItems: "stretch"
+    width: "100%",
+    alignItems: "stretch",
   },
   title: {
     fontSize: "40px"
@@ -36,12 +38,13 @@ const useStyles = makeStyles({
     justifyContent: "center",
     alignItems: "center"
   },
-  loadingCaption: {}
+  cointreePositioner: {
+    position: "relative"
+  }
 });
 
 const WaitingPage: React.FC = () => {
   const classes = useStyles({});
-  const history = useHistory();
   const socketService = useDependency(SocketService);
   const gameService = useDependency(GameService);
 
@@ -59,6 +62,7 @@ const WaitingPage: React.FC = () => {
 
     socketService.activate(gameService.handleEvent, attemptGameStateRestore);
     gameService.getCurrentGameState();
+    gameService.getUserState(true);
     preloadQuestions();
   }, []);
   return (
@@ -67,7 +71,10 @@ const WaitingPage: React.FC = () => {
       <MainTitleCard />
       <GameStateRedirector />
       <GameStateIndicator progressState={gameService.gameState} />
-      <CoinTree />
+      <div className={classes.cointreePositioner}>
+        <CoinTree />
+        <CoinTreeGame />
+      </div>
       <HowToPlay />
       <TableIndicator />
     </div>

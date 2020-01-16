@@ -43,7 +43,7 @@ const GamePage: React.FC = () => {
     // Attempt to restore previously selected answer
     AjaxService.fetchQuestionAnswer(gameService.currentQuestionPos).then(
       ans => {
-        console.log(ans);
+        // console.log(ans);
         gameService.currentAnswer = ans;
         gameService.update();
       }

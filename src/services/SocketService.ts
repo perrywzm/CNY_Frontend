@@ -27,7 +27,7 @@ export default class SocketService extends BaseDependency {
       // Keep it off for production, it can be quite verbose
       // Skip this key to disable
       debug: function(str) {
-        console.log("STOMP: " + str);
+        // console.log("STOMP: " + str);
       },
       // If disconnected, it will retry after 1s
       reconnectDelay: 5000
@@ -36,12 +36,12 @@ export default class SocketService extends BaseDependency {
     this.stompClient = new Client(stompConfig);
     this.stompClient.webSocketFactory = () => new SockJS(ENDPOINT);
     this.stompClient.onConnect = (frame: Frame) => {
-      console.log(frame);
+      // console.log(frame);
       // The return object has a method called `unsubscribe`
       const subscription = this.stompClient.subscribe("/topic/game", msg => {
         const payload = JSON.parse(msg.body) as GameState;
 
-        console.log(payload);
+        // console.log(payload);
         if (this.disconnectFlag) {
           this.onErrorRestore();
         }

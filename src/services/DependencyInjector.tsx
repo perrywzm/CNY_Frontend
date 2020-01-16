@@ -34,13 +34,13 @@ export default class DependencyProvider extends React.Component<
     const dependencies = {};
     for (let Dep of props.dependencies) {
       const DepAny = Dep as any;
-      console.log("Dependency id is", DepAny.id);
+      // console.log("Dependency id is", DepAny.id);
       dependencies[DepAny.id] = new Dep();
       dependencies[DepAny.id].update = this.update;
     }
 
     this.state = { dependencies };
-    console.log("Dependencies are", dependencies);
+    // console.log("Dependencies are", dependencies);
   }
 
   componentWillUnmount() {
@@ -69,6 +69,6 @@ export const useDependency = <T extends BaseDependency>(
   dependency: new () => T
 ) => {
   const state = React.useContext(DependencyContext);
-  console.log(state);
+  // console.log(state);
   return state.dependencies[(dependency as any).id] as T;
 };

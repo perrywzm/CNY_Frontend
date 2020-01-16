@@ -18,10 +18,10 @@ export default class GameService extends BaseDependency {
   rank = 0;
   questionsMap: Map<string | number, Question> = new Map();
 
-  setUsername=(name: string) => {
+  setUsername = (name: string) => {
     this.username = name;
     this.update();
-  }
+  };
 
   getAllQuestions = async (withAuth = false) => {
     this.isFetchingAllQuestions = true;
@@ -31,7 +31,7 @@ export default class GameService extends BaseDependency {
       questions.forEach(q => this.questionsMap.set(q.position, q));
       this.update();
     } else {
-      console.log(questions);
+      // console.log(questions);
     }
   };
 
@@ -68,7 +68,7 @@ export default class GameService extends BaseDependency {
     const question = await AjaxService.fetchQuestion(qnPos);
     if (question) {
       this.questionsMap.set(qnPos, question);
-      console.log(this.questionsMap);
+      // console.log(this.questionsMap);
     }
   };
 
@@ -77,13 +77,14 @@ export default class GameService extends BaseDependency {
     this.update();
   };
 
-  getUserState = async () => {
-    if (this.questionState === QuestionState.END) {
+  getUserState = async (force = false) => {
+    if (this.questionState === QuestionState.END || force) {
       const response = await AjaxService.fetchUserRank();
       if (response) {
-        const [rank, score] = response;
+        const [rank, score, username] = response;
         this.rank = rank;
         this.score = score;
+        this.username = username;
         this.update();
       }
     }
@@ -103,7 +104,7 @@ export default class GameService extends BaseDependency {
   };
 
   handleEvent = (msg: GameState) => {
-    console.log("Handling", msg);
+    // console.log("Handling", msg);
     switch (msg.progress) {
       case ProgressState.EMPTY:
         this.gameState = ProgressState.EMPTY;
@@ -114,7 +115,7 @@ export default class GameService extends BaseDependency {
         this.update();
         break;
       case ProgressState.PLAYING:
-        console.log("Run!");
+        // console.log("Run!");
         this.currentQuestionPos = msg.question;
         this.gameState = ProgressState.PLAYING;
         this.questionState = msg.questionState;
@@ -122,7 +123,7 @@ export default class GameService extends BaseDependency {
         this.update();
         break;
       case ProgressState.END:
-        console.log("Game Ended!");
+        // console.log("Game Ended!");
         this.currentQuestionPos = 0;
         this.gameState = ProgressState.END;
         this.update();

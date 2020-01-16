@@ -30,7 +30,6 @@ const ModalOverlay: React.FC<Props> = props => {
 };
 
 const defuseEvent = (e: any) => {
-  console.log(123);
   e.preventDefault();
   e.stopPropagation();
 };

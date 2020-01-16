@@ -10,6 +10,7 @@ interface StyleProps {
 
 const useStyles = makeStyles({
   container: {
+    zIndex: 1000,
     width: "100%",
     padding: "10px 30px",
     color: COLORS.accent,

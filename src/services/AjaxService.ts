@@ -29,7 +29,7 @@ export default class AjaxService {
             username: tableId
           });
         }
-        console.log("Result came in!", result);
+        // console.log("Result came in!", result);
         if (result.status === 200) {
           AjaxService.jwtHeader = {
             Authorization: `Bearer ${result.data.token}`
@@ -39,7 +39,7 @@ export default class AjaxService {
           return 0;
         }
       } catch (e) {
-        console.log(e);
+        // console.log(e);
         if (e.response) {
           switch (e.response.data.error) {
             case "There is an existing username":
@@ -64,11 +64,11 @@ export default class AjaxService {
         withAuth ? { headers: AjaxService.jwtHeader } : {}
       );
       if (result.status === 200) {
-        console.log("Getting all your questions", result.data);
+        // console.log("Getting all your questions", result.data);
         return result.data as Question[];
       }
     } catch (e) {
-      console.error("Error encountered when fetching question!", e);
+      // console.error("Error encountered when fetching question!", e);
       return null;
     }
   };
@@ -79,13 +79,13 @@ export default class AjaxService {
         headers: AjaxService.jwtHeader
       });
       if (result.status === 200) {
-        console.log("Getting current game state", result.data);
+        // console.log("Getting current game state", result.data);
         return result.data as GameState;
       } else {
         return null;
       }
     } catch (e) {
-      console.error("Error encountered when fetching question!", e);
+      // console.error("Error encountered when fetching question!", e);
       return null;
     }
   };
@@ -103,7 +103,7 @@ export default class AjaxService {
           return result.data as Question;
         }
       } catch (e) {
-        console.error("Error encountered when fetching question!", e);
+        // console.error("Error encountered when fetching question!", e);
         return null;
       }
     }
@@ -124,7 +124,7 @@ export default class AjaxService {
         return null;
       }
     } catch (e) {
-      console.error("Error encountered when submitting answer!", e);
+      // console.error("Error encountered when submitting answer!", e);
       return null;
     }
   };
@@ -134,14 +134,14 @@ export default class AjaxService {
       const result = await axios.get(BASE_HREF + `/user/response`, {
         headers: AjaxService.jwtHeader
       });
-      console.log(result);
+      // console.log(result);
       if (result.status === 200) {
         return result.data.find(qn => qn.question === qnPos).choice;
       } else {
         return null;
       }
     } catch (e) {
-      console.error("Error encountered when fetching question!", e);
+      // console.error("Error encountered when fetching question!", e);
       return null;
     }
   };
@@ -151,31 +151,31 @@ export default class AjaxService {
       const result = await axios.get(BASE_HREF + `/poll/${qnPos}`, {
         headers: AjaxService.jwtHeader
       });
-      console.log(result);
+      // console.log(result);
       if (result.status === 200) {
         return result;
       } else {
         return null;
       }
     } catch (e) {
-      console.error("Error encountered when fetching question!", e);
+      // console.error("Error encountered when fetching question!", e);
       return null;
     }
   };
 
-  static fetchUserRank = async (): Promise<number[]> => {
+  static fetchUserRank = async (): Promise<any[]> => {
     try {
       const result = await axios.get(BASE_HREF + "/user/rank", {
         headers: AjaxService.jwtHeader
       });
-      console.log(result);
+      // console.log(result);
       if (result.status === 200) {
-        return [result.data.rank, result.data.score];
+        return [result.data.rank, result.data.score, result.data.username];
       } else {
         return null;
       }
     } catch (e) {
-      console.error("Error encountered when fetching question!", e);
+      // console.error("Error encountered when fetching question!", e);
       return null;
     }
   };
@@ -191,7 +191,7 @@ export default class AjaxService {
         return null;
       }
     } catch (e) {
-      console.error("Error encountered when fetching image!", e);
+      // console.error("Error encountered when fetching image!", e);
       return null;
     }
   };
