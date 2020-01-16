@@ -6,7 +6,7 @@ import { COLORS } from "./../../../theme";
 import Modal from "@material-ui/core/Modal";
 import { Card, Typography } from "@material-ui/core";
 
-const COIN_GOAL = 88888;
+const COIN_GOAL = 8888;
 
 const useStyles = makeStyles({
   canvasContainer: {
@@ -152,17 +152,17 @@ const CoinTreeGame: React.FC<Props> = () => {
 
   const accelerateCoinRate = () => {
     coinRateRef.current += 1 + 0.1 * coinRateRef.current;
-    if (coinRateRef.current > 10000) coinRateRef.current = 10000;
+    if (coinRateRef.current > 50) coinRateRef.current = 50;
     coinDecayRef.current = Date.now();
   };
 
   const addCoin = (e: any) => {
-    e.stopPropagation()
+    e.stopPropagation();
     if (!coinInitTime.current) {
       coinInitTime.current = Date.now();
     }
     if (coinScore === COIN_GOAL) {
-      setCoinScore(score => 0)
+      setCoinScore(score => 0);
       coinRateRef.current = 0;
       return;
     }
@@ -176,7 +176,10 @@ const CoinTreeGame: React.FC<Props> = () => {
       ...spawnCoins(Math.floor(coinRateRef.current))
     ]);
     // Add to your score
-    const newScore = coinScore + Math.floor(coinRateRef.current);
+    const scoreDelta = Math.floor(
+      coinRateRef.current >= 50 ? 50 + 5 * Math.random() : coinRateRef.current
+    );
+    const newScore = coinScore + scoreDelta;
     if (newScore >= COIN_GOAL) {
       // ACTIVATE WIN!!!
       isDelayingClose.current = true;
@@ -184,18 +187,12 @@ const CoinTreeGame: React.FC<Props> = () => {
         if (isDelayingClose) {
           isDelayingClose.current = false;
         }
-      }, 5000);
+      }, 3000);
       timeTakenToWin.current =
         Math.round((Date.now() - coinInitTime.current) / 100) / 10;
+      coinInitTime.current = null;
       setCoinScore(score => COIN_GOAL);
       setShowCoinModal(true);
-      // setTimeout(
-      //   () =>
-      //     window.alert(
-      //       `Congratulations! You reached ${COIN_GOAL} coins in ${timeTaken} seconds! May you have good fortune this year!`
-      //     ),
-      //   0
-      // );
     } else {
       setCoinScore(score => newScore);
     }
@@ -284,7 +281,7 @@ const gameTickForCoin = (c: Coin) => {
 
 const spawnCoins = (n: number) => {
   if (n < 1) return [];
-  return [...Array(Math.min(n, 50))].map(i => {
+  return [...Array(Math.min(n, 20))].map(i => {
     return new Coin(
       window.innerWidth / 2 + Math.random() * 50 - 25,
       320 + Math.random() * 40,
