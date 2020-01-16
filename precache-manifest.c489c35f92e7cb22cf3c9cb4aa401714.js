@@ -1,23 +1,23 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "0e2e812a2f16d18b2e86ba0bedff6e1d",
+    "revision": "5049d1b2f6d0fa83963c25717329d19c",
     "url": "/CNY_Frontend/index.html"
   },
   {
-    "revision": "855c69da567940d665fd",
-    "url": "/CNY_Frontend/static/css/main.4e9e7bfa.chunk.css"
+    "revision": "b89a90158ef95322e4fb",
+    "url": "/CNY_Frontend/static/css/main.c9b97105.chunk.css"
   },
   {
-    "revision": "f886bbc48068340581ba",
-    "url": "/CNY_Frontend/static/js/2.3f60a826.chunk.js"
+    "revision": "bd296e2fc3b5c4cb652f",
+    "url": "/CNY_Frontend/static/js/2.221ced77.chunk.js"
   },
   {
-    "revision": "fab8c1a043f883580573167fd6d0baf8",
-    "url": "/CNY_Frontend/static/js/2.3f60a826.chunk.js.LICENSE"
+    "revision": "f5f97b9e78a549e9a16d6d1a4accdf19",
+    "url": "/CNY_Frontend/static/js/2.221ced77.chunk.js.LICENSE"
   },
   {
-    "revision": "855c69da567940d665fd",
-    "url": "/CNY_Frontend/static/js/main.4f188db6.chunk.js"
+    "revision": "b89a90158ef95322e4fb",
+    "url": "/CNY_Frontend/static/js/main.0f576cbc.chunk.js"
   },
   {
     "revision": "c22627f211a9e620c037",
@@ -36,8 +36,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/CNY_Frontend/static/media/cherryblossom.701fe22b.png"
   },
   {
-    "revision": "4ca3826ed4cee7655cf57a7a85ef42cd",
-    "url": "/CNY_Frontend/static/media/cntxt.4ca3826e.svg"
+    "revision": "2b7d2dc675e7b7eaf651df9df02b067c",
+    "url": "/CNY_Frontend/static/media/cntxt.2b7d2dc6.svg"
   },
   {
     "revision": "ec9762cb25b73cf1643efd143904151e",
