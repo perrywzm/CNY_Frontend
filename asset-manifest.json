@@ -1,11 +1,11 @@
 {
   "files": {
     "main.css": "/CNY_Frontend/static/css/main.c9b97105.chunk.css",
-    "main.js": "/CNY_Frontend/static/js/main.6a993286.chunk.js",
+    "main.js": "/CNY_Frontend/static/js/main.40c83ac8.chunk.js",
     "runtime-main.js": "/CNY_Frontend/static/js/runtime-main.1a52a2e4.js",
     "static/js/2.221ced77.chunk.js": "/CNY_Frontend/static/js/2.221ced77.chunk.js",
     "index.html": "/CNY_Frontend/index.html",
-    "precache-manifest.b3049b383ed49b5461346164310e9947.js": "/CNY_Frontend/precache-manifest.b3049b383ed49b5461346164310e9947.js",
+    "precache-manifest.8e3602881b25efb62af90695f4e00935.js": "/CNY_Frontend/precache-manifest.8e3602881b25efb62af90695f4e00935.js",
     "service-worker.js": "/CNY_Frontend/service-worker.js",
     "static/js/2.221ced77.chunk.js.LICENSE": "/CNY_Frontend/static/js/2.221ced77.chunk.js.LICENSE",
     "static/media/index.css": "/CNY_Frontend/static/media/bg.e2b23dc7.png",
@@ -20,6 +20,6 @@
     "static/js/runtime-main.1a52a2e4.js",
     "static/js/2.221ced77.chunk.js",
     "static/css/main.c9b97105.chunk.css",
-    "static/js/main.6a993286.chunk.js"
+    "static/js/main.40c83ac8.chunk.js"
   ]
 }
